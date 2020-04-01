@@ -1,3 +1,4 @@
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Pact.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Extensions/Dictionary+Pact.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Extensions/Bundle+Pact.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/Expression.swift
@@ -8,3 +9,4 @@ $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Metadata.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/PactHTTPMethod.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Response.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Request.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Pacticipant.swift
