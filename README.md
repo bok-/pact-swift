@@ -1,4 +1,4 @@
-#  PACTSwift (beta)
+#  PactSwift (beta)
 
 Work in progress...
 
