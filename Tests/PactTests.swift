@@ -16,18 +16,22 @@ class PactTests: XCTestCase {
 	let testProvider = "test_provider"
 
 	func testPact_SetsProvider() throws {
-		XCTAssertEqual(try XCTUnwrap(pactPacticipants().payload["provider"] as? [String: String]), ["name": testProvider])
+		XCTAssertEqual(try XCTUnwrap(prepareTestPact().payload["provider"] as? [String: String]), ["name": testProvider])
 	}
 
 	func testPact_SetsConsumer() throws {
-		XCTAssertEqual(try XCTUnwrap(pactPacticipants().payload["consumer"] as? [String: String]), ["name": testConsumer])
+		XCTAssertEqual(try XCTUnwrap(prepareTestPact().payload["consumer"] as? [String: String]), ["name": testConsumer])
+	}
+
+	func testPact_SetsMetadata() {
+		XCTAssertNotNil(prepareTestPact().payload["metadata"])
 	}
 
 }
 
 private extension PactTests {
 
-	func pactPacticipants() -> Pact {
+	func prepareTestPact() -> Pact {
 		Pact(consumer: Pacticipant.consumer(testConsumer), provider: Pacticipant.provider(testProvider))
 	}
 

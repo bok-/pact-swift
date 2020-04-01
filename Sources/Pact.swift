@@ -13,10 +13,14 @@ struct Pact {
 	let consumer: Pacticipant
 	let provider: Pacticipant
 
+	var interactions: [Interaction] = []
+
 	var payload: [String: Any] {
 		[
 			"consumer": consumer.name,
-			"provider": provider.name
+			"provider": provider.name,
+			"interactions": interactions,
+			"metadata": Metadata.values
 		]
 	}
 
