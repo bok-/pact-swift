@@ -10,13 +10,11 @@ import Foundation
 
 enum Metadata {
 
-	typealias MetadataTypeValue = [String: [String: [String: String]]]
+	typealias MetadataTypeValue = [String: [String: String]]
 
 	static let values: MetadataTypeValue = [
-		"metadata": [
 			"pactSpecification": Metadata.pactSpecVersion,
 			"pact-swift": Metadata.pactSwiftVersion
-		]
 	]
 
 	static private var pactSpecVersion: [String: String] {
