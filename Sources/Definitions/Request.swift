@@ -9,7 +9,7 @@
 public struct Request {
 
 	var method: PactHTTPMethod
-	var path: Any
+	var path: String
 	var query: Any?
 	var headers: [String: Any]?
 	var body: Any?
