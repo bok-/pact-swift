@@ -62,7 +62,7 @@ class PactTests: XCTestCase {
 	}
 
 	func testPact_SetsInteractionRequestHeaders() throws {
-		let expectedResult: [String: String] = ["Content-Type": "applicatoin/json; charset=UTF-8"]
+		let expectedResult: [String: String] = ["Content-Type": "applicatoin/json; charset=UTF-8", "X-Value": "testCode"]
 		let interaction = Interaction(
 			description: "test_request_headers",
 			request: Request(
@@ -81,8 +81,42 @@ class PactTests: XCTestCase {
 
 		let testPact = prepareTestPact(interactions: interaction)
 
-		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first)?.request.headers?["Content-Type"] as? String)
-		XCTAssertEqual(testResult, expectedResult["Content-Type"])
+		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first)?.request.headers as? [String: String])
+		XCTAssertEqual(testResult["Content-Type"], expectedResult["Content-Type"])
+		XCTAssertEqual(testResult["X-Value"], expectedResult["X-Value"])
+	}
+
+	// MARK: - Interaction request query
+
+	func testPact_SetsInteractionReqeustQuery() throws {
+		let expectedResult: [String: Any] = [
+			"max_results": ["100"],
+			"state": ["NSW"],
+			"term": ["80 CLARENCE ST, SYDNEY NSW 2000"]
+		]
+
+		let interaction = Interaction(
+			description: "test query dictionary",
+			request: Request(
+				method: .GET,
+				path: "/autoComplete/address",
+				query: expectedResult,
+				headers: nil,
+				body: nil
+			),
+			response: Response(
+				statusCode: 200,
+				headers: nil,
+				body: nil
+			)
+		)
+
+		let testPact = prepareTestPact(interactions: interaction)
+
+		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first)?.request.query as? [String: Any])
+		XCTAssertTrue(try (XCTUnwrap(testResult["max_results"] as? [String]).contains("100")))
+		XCTAssertTrue(try (XCTUnwrap(testResult["state"] as? [String]).contains("NSW")))
+		XCTAssertTrue(try (XCTUnwrap(testResult["term"] as? [String]).contains("80 CLARENCE ST, SYDNEY NSW 2000")))
 	}
 
 	// MARK: - Interaction response
