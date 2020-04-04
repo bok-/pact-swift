@@ -7,6 +7,8 @@ $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/EachLike.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/Matcher.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Metadata.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/PactHTTPMethod.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/ProviderState.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Response.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Interaction.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Request.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Pacticipant.swift

@@ -81,7 +81,7 @@ class PactTests: XCTestCase {
 
 		let testPact = prepareTestPact(interactions: interaction)
 
-		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first)?.request.headers as? [String: String])
+		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first)?.request.headers)
 		XCTAssertEqual(testResult["Content-Type"], expectedResult["Content-Type"])
 		XCTAssertEqual(testResult["X-Value"], expectedResult["X-Value"])
 	}
@@ -89,7 +89,7 @@ class PactTests: XCTestCase {
 	// MARK: - Interaction request query
 
 	func testPact_SetsInteractionReqeustQuery() throws {
-		let expectedResult: [String: Any] = [
+		let expectedResult = [
 			"max_results": ["100"],
 			"state": ["NSW"],
 			"term": ["80 CLARENCE ST, SYDNEY NSW 2000"]
@@ -113,10 +113,10 @@ class PactTests: XCTestCase {
 
 		let testPact = prepareTestPact(interactions: interaction)
 
-		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first)?.request.query as? [String: Any])
-		XCTAssertTrue(try (XCTUnwrap(testResult["max_results"] as? [String]).contains("100")))
-		XCTAssertTrue(try (XCTUnwrap(testResult["state"] as? [String]).contains("NSW")))
-		XCTAssertTrue(try (XCTUnwrap(testResult["term"] as? [String]).contains("80 CLARENCE ST, SYDNEY NSW 2000")))
+		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first)?.request.query)
+		XCTAssertTrue(try (XCTUnwrap(testResult["max_results"]).contains("100")))
+		XCTAssertTrue(try (XCTUnwrap(testResult["state"]).contains("NSW")))
+		XCTAssertTrue(try (XCTUnwrap(testResult["term"]).contains("80 CLARENCE ST, SYDNEY NSW 2000")))
 	}
 
 	// MARK: - Interaction response
