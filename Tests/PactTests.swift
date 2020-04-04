@@ -65,6 +65,16 @@ class PactTests: XCTestCase {
 		let expectedResult: [String: String] = ["Content-Type": "applicatoin/json; charset=UTF-8", "X-Value": "testCode"]
 		let interaction = Interaction(
 			description: "test_request_headers",
+			providerStates: [
+				ProviderState(
+					name: "an alligator with the given name exists",
+					params: ["name": "Mary"]
+				),
+				ProviderState(
+					name: "the user is logged in",
+					params: ["user": "Fred"]
+				)
+			],
 			request: Request(
 				method: .GET,
 				path: "/",
@@ -97,6 +107,7 @@ class PactTests: XCTestCase {
 
 		let interaction = Interaction(
 			description: "test query dictionary",
+			providerState: "some testable provider state",
 			request: Request(
 				method: .GET,
 				path: "/autoComplete/address",
@@ -146,6 +157,7 @@ private extension PactTests {
 	func prepareInteraction(description: String, method: PactHTTPMethod = .GET, path: String = "/", statusCode: Int = 200) -> Interaction {
 		Interaction(
 			description: description,
+			providerState: "some testable provider state",
 			request: Request(method: method, path: path),
 			response: Response(statusCode: statusCode)
 		)
