@@ -14,3 +14,11 @@ struct ProviderState {
 	let params: [String: String]
 
 }
+
+extension ProviderState: Equatable {
+
+	static func ==(lhs: ProviderState, rhs: ProviderState) -> Bool {
+		lhs.name == rhs.name && lhs.params == rhs.params
+	}
+
+}
