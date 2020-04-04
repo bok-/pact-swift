@@ -130,6 +130,45 @@ class PactTests: XCTestCase {
 		XCTAssertTrue(try (XCTUnwrap(testResult["term"]).contains("80 CLARENCE ST, SYDNEY NSW 2000")))
 	}
 
+	func testPact_SetsProviderState() throws {
+		let expectedResult = "some testable provider state"
+
+		let interaction = Interaction(
+			description: "test provider state",
+			providerState: expectedResult,
+			request: Request(method: .GET, path: "/"),
+			response: Response(statusCode: 200)
+		)
+
+		let testPact = prepareTestPact(interactions: interaction)
+
+		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first)?.providerState)
+		XCTAssertEqual(testResult, expectedResult)
+	}
+
+	func testPact_SetsProviderStates() throws {
+		let firstProviderState = ProviderState(name: "an alligator with the given name exists", params: ["name": "Mary"])
+		let secondProviderState = ProviderState(name: "the user is logged in", params: ["username": "Fred"])
+		let expectedResult = [firstProviderState, secondProviderState]
+
+		let interaction = Interaction(
+			description: "test provider states",
+			providerStates: [
+				ProviderState(name: "an alligator with the given name exists", params: ["name": "Mary"]),
+				ProviderState(name: "the user is logged in", params: ["username": "Fred"])
+			],
+			request: Request(method: .GET, path: "/"),
+			 response: Response(statusCode: 200)
+		)
+
+		let testPact = prepareTestPact(interactions: interaction)
+		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first)?.providerStates)
+
+		XCTAssertTrue(expectedResult.allSatisfy { expectedState in
+			testResult.contains { $0 == expectedState }
+		})
+	}
+
 	// MARK: - Interaction response
 
 	func testPact_SetsInteractionResponseStatusCode() throws {
