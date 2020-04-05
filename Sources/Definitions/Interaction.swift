@@ -11,8 +11,8 @@ import Foundation
 struct Interaction {
 
 	let description: String
-	var providerState: String? = nil
-	var providerStates: [ProviderState]? = nil
+	var providerState: String?
+	var providerStates: [ProviderState]?
 	let request: Request
 	let response: Response
 
