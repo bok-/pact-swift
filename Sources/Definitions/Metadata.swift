@@ -26,3 +26,20 @@ enum Metadata {
 	}
 
 }
+
+extension Metadata: Encodable {
+
+	enum CodingKeys: CodingKey {
+		case values
+		case pactSpecVersion
+		case pactSwiftVersion
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(Self.values, forKey: .values)
+		try container.encode(Self.pactSpecVersion, forKey: .pactSpecVersion)
+		try container.encode(Self.pactSwiftVersion, forKey: .pactSwiftVersion)
+	}
+
+}
