@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ProviderState {
+struct ProviderState: Encodable {
 
 	let name: String
 	let params: [String: String]
