@@ -13,11 +13,11 @@ import XCTest
 class PacticipantTests: XCTestCase {
 
 	func testPacticipant_ReturnsConsumerName() {
-		XCTAssertEqual(Pacticipant.consumer("test_consumer").name, ["name": "test_consumer"])
+		XCTAssertEqual(Pacticipant.consumer("test_consumer").name, "test_consumer")
 	}
 
 	func testPacticipant_ReturnsProviderName() {
-		XCTAssertEqual(Pacticipant.provider("test_provider").name, ["name": "test_provider"])
+		XCTAssertEqual(Pacticipant.provider("test_provider").name, "test_provider")
 	}
 
 }

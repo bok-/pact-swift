@@ -16,11 +16,11 @@ class PactTests: XCTestCase {
 	let testProvider = "test_provider"
 
 	func testPact_SetsProvider() throws {
-		XCTAssertEqual(try XCTUnwrap(prepareTestPact().payload["provider"] as? [String: String]), ["name": testProvider])
+		XCTAssertEqual(try XCTUnwrap(prepareTestPact().payload["provider"] as? String), testProvider)
 	}
 
 	func testPact_SetsConsumer() throws {
-		XCTAssertEqual(try XCTUnwrap(prepareTestPact().payload["consumer"] as? [String: String]), ["name": testConsumer])
+		XCTAssertEqual(try XCTUnwrap(prepareTestPact().payload["consumer"] as? String), testConsumer)
 	}
 
 	func testPact_SetsMetadata() {
