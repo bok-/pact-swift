@@ -80,12 +80,11 @@ class PactTests: XCTestCase {
 				path: "/",
 				query: nil,
 				headers: expectedResult,
-				body: nil
+				body: ["Foo": "Bar"]
 			),
 			response: Response(
 				statusCode: 200,
-				headers: nil,
-				body: nil
+				headers: nil
 			)
 		)
 
@@ -112,13 +111,11 @@ class PactTests: XCTestCase {
 				method: .GET,
 				path: "/autoComplete/address",
 				query: expectedResult,
-				headers: nil,
-				body: nil
+				headers: nil
 			),
 			response: Response(
 				statusCode: 200,
-				headers: nil,
-				body: nil
+				headers: nil
 			)
 		)
 
@@ -158,7 +155,7 @@ class PactTests: XCTestCase {
 				ProviderState(name: "the user is logged in", params: ["username": "Fred"])
 			],
 			request: Request(method: .GET, path: "/"),
-			 response: Response(statusCode: 200)
+			response: Response(statusCode: 200)
 		)
 
 		let testPact = prepareTestPact(interactions: interaction)
@@ -179,6 +176,35 @@ class PactTests: XCTestCase {
 
 		let testResult = try XCTUnwrap((testPact.payload["interactions"] as? [Interaction])?.first).response.statusCode
 		XCTAssertEqual(testResult, expectedResult)
+	}
+
+	// MARK: Encodable
+
+	func testPact_EncodableData() {
+		let firstProviderState = ProviderState(name: "an alligator with the given name exists", params: ["name": "Mary"])
+		let secondProviderState = ProviderState(name: "the user is logged in", params: ["username": "Fred"])
+//		let expectedResult = [firstProviderState, secondProviderState]
+
+		let interaction = Interaction(
+			description: "test Encodable Pact",
+			providerStates: [firstProviderState, secondProviderState],
+			request: Request(
+				method: .GET,
+				path: "/",
+				query: ["max_results": ["100"]],
+				headers: ["Content-Type": "applicatoin/json; charset=UTF-8", "X-Value": "testCode"]
+			),
+			response: Response(
+				statusCode: 200
+			)
+		)
+
+		let testPact = Pact(
+			consumer: Pacticipant.consumer("test-consumer"),
+			provider: Pacticipant.provider("test-provider"),
+			interactions: [interaction])
+
+		debugPrint(String(data: testPact.data!, encoding: .utf8)!)
 	}
 
 }

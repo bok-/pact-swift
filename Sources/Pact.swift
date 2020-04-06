@@ -10,6 +10,8 @@ import Foundation
 
 struct Pact: Encodable {
 
+	private let metadata = Metadata()
+
 	// MARK: - Properties
 
 	let consumer: Pacticipant
@@ -28,15 +30,11 @@ struct Pact: Encodable {
 
 	var data: Data? {
 		do {
-			return try JSONEncoder.pactEncoding.encode(self)
+			return try JSONEncoder().encode(self)
 		} catch {
 			debugPrint("\(error)")
 		}
 		return nil
 	}
-
-	// MARK - Private properties
-
-	private let metadata = Metadata()
 
 }

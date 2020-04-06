@@ -18,7 +18,7 @@
 		AD641A402434518500785CE1 /* PactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A3F2434518500785CE1 /* PactTests.swift */; };
 		AD641A422434588200785CE1 /* Interaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A412434588200785CE1 /* Interaction.swift */; };
 		AD881808242C715B00BF510D /* PactSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8817FE242C715A00BF510D /* PactSwift.framework */; };
-		AD88180F242C715B00BF510D /* PACTSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD881801242C715A00BF510D /* PACTSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AD88180F242C715B00BF510D /* PactSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD881801242C715A00BF510D /* PactSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD8A32D7242CCF5600283080 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = AD8A32D6242CCF5600283080 /* Scripts */; };
 		ADB7C1142432D2F400A16CDE /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1132432D2F400A16CDE /* Expression.swift */; };
 		ADB7C1162432D31A00A16CDE /* EachLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1152432D31A00A16CDE /* EachLike.swift */; };
@@ -62,7 +62,7 @@
 		AD641A3F2434518500785CE1 /* PactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactTests.swift; sourceTree = "<group>"; };
 		AD641A412434588200785CE1 /* Interaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interaction.swift; sourceTree = "<group>"; };
 		AD8817FE242C715A00BF510D /* PactSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PactSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD881801242C715A00BF510D /* PACTSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PACTSwift.h; sourceTree = "<group>"; };
+		AD881801242C715A00BF510D /* PactSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PactSwift.h; sourceTree = "<group>"; };
 		AD881802242C715A00BF510D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD881807242C715B00BF510D /* PactSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PactSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD88180E242C715B00BF510D /* TestsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TestsInfo.plist; sourceTree = "<group>"; };
@@ -227,7 +227,7 @@
 		ADCB2563242C844B0048BD18 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				AD881801242C715A00BF510D /* PACTSwift.h */,
+				AD881801242C715A00BF510D /* PactSwift.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -239,7 +239,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD88180F242C715B00BF510D /* PACTSwift.h in Headers */,
+				AD88180F242C715B00BF510D /* PactSwift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Interaction {
+struct Interaction: Encodable {
 
 	let description: String
 	var providerState: String?

@@ -6,10 +6,11 @@
 //  Copyright © 2020 PACT Foundation. All rights reserved.
 //
 
-struct Response {
+struct Response: Encodable {
 
 	var statusCode: Int
-	var headers: [String: Any]?
-	var body: Any?
+	var headers: [String: String]?
+	var body: String? // TODO: - Any<T: Encodable>?
+	var matchingRules: String? // TODO: - Any<T: Encodable>?
 
 }
