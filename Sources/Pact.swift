@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Pact {
+struct Pact: Encodable {
 
 	let consumer: Pacticipant
 	let provider: Pacticipant
@@ -22,6 +22,16 @@ struct Pact {
 			"interactions": interactions,
 			"metadata": Metadata.values
 		]
+	}
+
+	var data: Data? {
+		do {
+			return try JSONEncoder.pactEncoding.encode(self)
+		} catch {
+			debugPrint("\(error)")
+		}
+
+		return nil
 	}
 
 }
