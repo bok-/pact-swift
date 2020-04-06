@@ -12,10 +12,6 @@ public enum Pacticipant {
 
 	case consumer(String)
 	case provider(String)
-	
-}
-
-extension Pacticipant {
 
 	var name: [String: String] {
 		switch self {
@@ -23,6 +19,15 @@ extension Pacticipant {
 				 .provider(let name):
 			return ["name": name]
 		}
+	}
+
+}
+
+extension Pacticipant: Encodable {
+
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.unkeyedContainer()
+		try container.encode(name)
 	}
 
 }
