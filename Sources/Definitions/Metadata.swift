@@ -8,38 +8,32 @@
 
 import Foundation
 
-enum Metadata {
+struct Metadata {
 
-	typealias MetadataTypeValue = [String: [String: String]]
+	let pactSpec = PactVersion("3.0.0")
+	let pactSwift = PactVersion(Bundle.pact.shortVersion!)
 
-	static let values: MetadataTypeValue = [
-			"pactSpecification": Metadata.pactSpecVersion,
-			"pact-swift": Metadata.pactSwiftVersion
-	]
+	struct PactVersion: Encodable {
+		let version: String
 
-	static private var pactSpecVersion: [String: String] {
-		["version": "3.0.0"]
-	}
-
-	static private var pactSwiftVersion: [String: String] {
-		["version": Bundle.pact.shortVersion!]
+		init(_ version: String) {
+			self.version = version
+		}
 	}
 
 }
 
 extension Metadata: Encodable {
 
-	enum CodingKeys: CodingKey {
-		case values
-		case pactSpecVersion
-		case pactSwiftVersion
+	enum CodingKeys: String, CodingKey {
+		case pactSpec = "pactSpecification"
+		case pactSwift = "pact-swift"
 	}
 
-	func encode(to encoder: Encoder) throws {
+	public func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(Self.values, forKey: .values)
-		try container.encode(Self.pactSpecVersion, forKey: .pactSpecVersion)
-		try container.encode(Self.pactSwiftVersion, forKey: .pactSwiftVersion)
+		try container.encode(pactSpec, forKey: .pactSpec)
+		try container.encode(pactSwift, forKey: .pactSwift)
 	}
 
 }

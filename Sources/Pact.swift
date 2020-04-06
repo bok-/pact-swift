@@ -10,6 +10,8 @@ import Foundation
 
 struct Pact: Encodable {
 
+	// MARK: - Properties
+
 	let consumer: Pacticipant
 	let provider: Pacticipant
 
@@ -20,7 +22,7 @@ struct Pact: Encodable {
 			"consumer": consumer.name,
 			"provider": provider.name,
 			"interactions": interactions,
-			"metadata": Metadata.values
+			"metadata": metadata
 		]
 	}
 
@@ -30,8 +32,11 @@ struct Pact: Encodable {
 		} catch {
 			debugPrint("\(error)")
 		}
-
 		return nil
 	}
+
+	// MARK - Private properties
+
+	private let metadata = Metadata()
 
 }
