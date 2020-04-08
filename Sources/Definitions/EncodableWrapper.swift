@@ -10,6 +10,34 @@ import Foundation
 
 struct EncodableWrapper {
 
+	let typeDefinition: Any
+
+	init(for value: Any) {
+		self.typeDefinition = value
+	}
+
+	/// Returns an object whose nodes and leaves conform to any `Encodable` value.
+	///
+	/// Transforms the following suppoerted types into `AnyEncodable`:
+	///
+	/// - `String`
+	/// - `Int`
+	/// - `Double`
+	/// - `Array<Encodable>`
+	/// - `Dictionary<String, Encodable>`
+	///
+	func asEncodable() throws -> AnyEncodable? {
+		do {
+			return try process(element: typeDefinition)
+		} catch {
+			throw EncodableWrapperError.notEncodable(typeDefinition)
+		}
+	}
+
+}
+
+extension EncodableWrapper {
+
 	enum EncodableWrapperError: Error {
 		case notEncodable(Any?)
 		case unknown
@@ -23,23 +51,11 @@ struct EncodableWrapper {
 		}
 	}
 
-	let typeDefinition: Any
+}
 
-	init(for value: Any) {
-		self.typeDefinition = value
-	}
+private extension EncodableWrapper {
 
-	func asEncodable() throws -> AnyEncodable? {
-		do {
-			return try process(element: typeDefinition)
-		} catch {
-			throw EncodableWrapperError.notEncodable(typeDefinition)
-		}
-	}
-
-	// MARK: - Private
-
-	private func process(element: Any) throws -> AnyEncodable? {
+	func process(element: Any) throws -> AnyEncodable? {
 		let encodedElement: AnyEncodable?
 
 		switch element {
@@ -56,7 +72,7 @@ struct EncodableWrapper {
 		return encodedElement
 	}
 
-	private func processArray(_ array: [Any]) throws -> [AnyEncodable] {
+	func processArray(_ array: [Any]) throws -> [AnyEncodable] {
 		var encodableArray = [AnyEncodable]()
 		do {
 			_ = try array.map {
@@ -68,7 +84,7 @@ struct EncodableWrapper {
 		}
 	}
 
-	private func processDictionary(_ dictionary: [String: Any]) throws -> [String: AnyEncodable] {
+	func processDictionary(_ dictionary: [String: Any]) throws -> [String: AnyEncodable] {
 		var encodableDictionary = [String: AnyEncodable]()
 		do {
 			_ = try dictionary.map {

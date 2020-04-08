@@ -6,7 +6,18 @@
 //  Copyright © 2020 PACT Foundation. All rights reserved.
 //
 
-public struct Request: Encodable {
+public struct Request {
+
+	let method: PactHTTPMethod
+	let path: String
+	let query: [String: [String]]?
+	let headers: [String: String]?
+	let body: Any?
+
+	private let bodyEncoder: (Encoder) throws -> Void
+}
+
+extension Request: Encodable {
 
 	enum CodingKeys: String, CodingKey {
 		case method
@@ -16,14 +27,15 @@ public struct Request: Encodable {
 		case body
 	}
 
-	let method: PactHTTPMethod
-	let path: String
-	let query: [String: [String]]?
-	let headers: [String: String]?
-	let body: Any?
-
-	private let bodyEncoder: (Encoder) throws -> Void
-
+	///
+	/// Creates an object representing a network `Request`.
+	/// - Parameters:
+	///		- method: The http method of the http request
+	///		- path: A url path of the http reuquest (without the base url)
+	///		- query: A url query
+	///		- headers: Headers of the http reqeust
+	///		- body: Optional body of the http request
+	///
 	init(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: String]? = nil, body: Any? = nil) {
 		self.method = method
 		self.path = path
