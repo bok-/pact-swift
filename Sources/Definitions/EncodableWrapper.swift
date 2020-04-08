@@ -30,7 +30,7 @@ struct EncodableWrapper {
 		do {
 			return try process(element: typeDefinition)
 		} catch {
-			throw EncodableWrapperError.notEncodable(typeDefinition)
+			throw EncodingError.notEncodable(typeDefinition)
 		}
 	}
 
@@ -38,14 +38,15 @@ struct EncodableWrapper {
 
 extension EncodableWrapper {
 
-	enum EncodableWrapperError: Error {
+	enum EncodingError: Error {
 		case notEncodable(Any?)
 		case unknown
 
 		var localizedDescription: String {
+
 			switch self {
 			case .notEncodable(let element):
-				return "Error casting '\(String(describing: element))' to a JSON safe Type (eg: String, Int, Double, Decimal, Bool, Dictionary<String, Encodable>, Array<Encodable>)" //swiftlint:disable:this line_length
+				return "Error casting '\(String(describing: (element != nil) ? element! : "provided value"))' to a JSON safe Type: String, Int, Double, Decimal, Bool, Dictionary<String, Encodable>, Array<Encodable>)" //swiftlint:disable:this line_length
 			default: return "Error casting into an Encodable type"
 			}
 		}
@@ -66,7 +67,7 @@ private extension EncodableWrapper {
 		case let double as Double: encodedElement = AnyEncodable(double)
 		case let decimal as Decimal: encodedElement = AnyEncodable(decimal)
 		case let bool as Bool: encodedElement = AnyEncodable(bool)
-		default: throw EncodableWrapperError.notEncodable(element)
+		default: throw EncodingError.notEncodable(element)
 		}
 
 		return encodedElement
@@ -80,7 +81,7 @@ private extension EncodableWrapper {
 			}
 			return encodableArray
 		} catch {
-			throw EncodableWrapperError.notEncodable(array)
+			throw EncodingError.notEncodable(array)
 		}
 	}
 
@@ -93,7 +94,7 @@ private extension EncodableWrapper {
 			}
 			return encodableDictionary
 		} catch {
-			throw EncodableWrapperError.notEncodable(dictionary)
+			throw EncodingError.notEncodable(dictionary)
 		}
 	}
 

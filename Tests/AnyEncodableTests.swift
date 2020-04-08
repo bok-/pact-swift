@@ -122,4 +122,85 @@ class AnyEncodableTests: XCTestCase {
 		}
 	}
 
+	// MARK: - Testing throws
+
+	func testEncodableWrapper_Handles_InvalidInput() {
+		struct FailingTestModel {
+			let unsupportedDate = Date()
+		}
+
+		do {
+			_ = try EncodableWrapper(for: FailingTestModel()).asEncodable()
+			XCTFail("Expected the EncodableWrapper to throw!")
+		} catch {
+			print(error)
+			do {
+				let testResult = try XCTUnwrap(error as? EncodableWrapper.EncodingError)
+				XCTAssertTrue(testResult.localizedDescription.contains("unsupportedDate"))
+			} catch {
+				XCTFail("Expected an EncodableWrapper.EncodingError to be thrown")
+			}
+		}
+	}
+
+	func testEncodableWrapper_Handles_InvalidArrayInput() {
+		let testDate = Date()
+		let testDateString = dateComponents(from: testDate)
+
+		struct FailingTestModel {
+			let failingArray: Array<Date>
+
+			init(array: [Date]) {
+				self.failingArray = array
+			}
+		}
+
+		let testableObject = FailingTestModel(array: [testDate])
+
+		do {
+			_ = try EncodableWrapper(for: testableObject.failingArray).asEncodable()
+			XCTFail("Expected the EncodableWrapper to throw!")
+		} catch {
+			print(error)
+			do {
+				let testResult = try XCTUnwrap(error as? EncodableWrapper.EncodingError)
+				XCTAssertTrue(testResult.localizedDescription.contains("Error casting \'[\(testDateString) "))
+			} catch {
+				XCTFail("Expected an EncodableWrapper.EncodingError to be thrown")
+			}
+		}
+	}
+
+	func testEncodableWrapper_Handles_InvalidDictInput() {
+		struct FailingTestModel {
+			let failingDict = ["foo": Date()]
+		}
+
+		let testableObject = FailingTestModel()
+
+		do {
+			_ = try EncodableWrapper(for: testableObject.failingDict).asEncodable()
+			XCTFail("Expected the EncodableWrapper to throw!")
+		} catch {
+			print(error)
+			do {
+				let testResult = try XCTUnwrap(error as? EncodableWrapper.EncodingError)
+				XCTAssertTrue(testResult.localizedDescription.contains("Error casting \'[\"foo\":"))
+			} catch {
+				XCTFail("Expected an EncodableWrapper.EncodingError to be thrown")
+			}
+		}
+	}
+
+}
+
+private extension AnyEncodableTests {
+
+	func dateComponents(from date: Date = Date()) -> String {
+		let format = DateFormatter()
+		format.dateFormat = "yyyy-MM-dd"
+		format.timeZone = TimeZone(identifier: "GMT")
+		return format.string(from: date)
+	}
+
 }
