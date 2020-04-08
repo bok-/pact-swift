@@ -62,6 +62,7 @@ class PactTests: XCTestCase {
 	}
 
 	func testPact_SetsInteractionRequestHeaders() throws {
+
 		let expectedResult: [String: String] = ["Content-Type": "applicatoin/json; charset=UTF-8", "X-Value": "testCode"]
 		let interaction = Interaction(
 			description: "test_request_headers",
@@ -80,7 +81,7 @@ class PactTests: XCTestCase {
 				path: "/",
 				query: nil,
 				headers: expectedResult,
-				body: ["Foo": "Bar"]
+				body: nil
 			),
 			response: Response(
 				statusCode: 200,
@@ -180,10 +181,19 @@ class PactTests: XCTestCase {
 
 	// MARK: Encodable
 
-	func testPact_EncodableData() {
+	func testPact_SetsRequestBody() {
 		let firstProviderState = ProviderState(name: "an alligator with the given name exists", params: ["name": "Mary"])
 		let secondProviderState = ProviderState(name: "the user is logged in", params: ["username": "Fred"])
-//		let expectedResult = [firstProviderState, secondProviderState]
+
+		let testBody: Any = [
+			"foo": "Bar",
+			"baz": 200.0,
+			"bar": [
+				"goo": 123.45
+			],
+			"fuu": ["xyz", "abc"],
+			"num": [1, 2, 3]
+		]
 
 		let interaction = Interaction(
 			description: "test Encodable Pact",
@@ -192,7 +202,8 @@ class PactTests: XCTestCase {
 				method: .GET,
 				path: "/",
 				query: ["max_results": ["100"]],
-				headers: ["Content-Type": "applicatoin/json; charset=UTF-8", "X-Value": "testCode"]
+				headers: ["Content-Type": "applicatoin/json; charset=UTF-8", "X-Value": "testCode"],
+				body: testBody
 			),
 			response: Response(
 				statusCode: 200
@@ -202,14 +213,45 @@ class PactTests: XCTestCase {
 		let testPact = Pact(
 			consumer: Pacticipant.consumer("test-consumer"),
 			provider: Pacticipant.provider("test-provider"),
-			interactions: [interaction])
+			interactions: [interaction]
+		)
 
-		debugPrint(String(data: testPact.data!, encoding: .utf8)!)
+		do {
+			let testResult = try XCTUnwrap(try JSONDecoder().decode(TestPactModel.self, from: testPact.data!).interactions.first).request.body
+			XCTAssertEqual(testResult.foo, "Bar")
+			XCTAssertEqual(testResult.baz, 200.0)
+			XCTAssertTrue(testResult.fuu.allSatisfy { ((testBody as! [String: Any])["fuu"] as! Array).contains($0) })
+			XCTAssertTrue(testResult.num.allSatisfy { ((testBody as! [String: Any])["num"] as! Array).contains($0) })
+			XCTAssertEqual(testResult.bar, ["goo": 123.45])
+		} catch {
+			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
+		}
 	}
 
 }
 
 private extension PactTests {
+
+	// MARK: - Test resources and definitions
+
+	struct TestPactModel: Decodable {
+		let interactions: [TestInteractionModel]
+		struct TestInteractionModel: Decodable {
+			let request: TestRequestModel
+			struct TestRequestModel: Decodable {
+				let body: TestBodyModel
+				struct TestBodyModel: Decodable {
+					let foo: String
+					let baz: Double
+					let bar: [String: Double]
+					let fuu: [String]
+					let num: [Int]
+				}
+			}
+		}
+	}
+
+	// MARK: - Test Helper functions
 
 	func prepareTestPact() -> Pact {
 		Pact(consumer: Pacticipant.consumer(testConsumer), provider: Pacticipant.provider(testProvider))
