@@ -63,7 +63,7 @@ extension Request: Encodable {
 			if let query = query { try container.encode(query, forKey: .query) }
 			if let headers = headers { try container.encode(headers, forKey: .headers) }
 			if let encodableBody = encodableBody { try container.encode(encodableBody, forKey: .body) }
-			if let matchingRules = matchingRules { try container.encode(matchingRules, forKey: .matchingRules)}
+			if let matchingRules = matchingRules { try container.encode(matchingRules, forKey: .matchingRules) }
 		}
 	}
 

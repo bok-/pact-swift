@@ -133,7 +133,6 @@ class AnyEncodableTests: XCTestCase {
 			_ = try PactEncodable(value: FailingTestModel()).encoded().node
 			XCTFail("Expected the EncodableWrapper to throw!")
 		} catch {
-			print(error)
 			do {
 				let testResult = try XCTUnwrap(error as? PactEncodable.EncodingError)
 				XCTAssertTrue(testResult.localizedDescription.contains("unsupportedDate"))
@@ -161,7 +160,6 @@ class AnyEncodableTests: XCTestCase {
 			_ = try PactEncodable(value: testableObject.failingArray).encoded().node
 			XCTFail("Expected the EncodableWrapper to throw!")
 		} catch {
-			print(error)
 			do {
 				let testResult = try XCTUnwrap(error as? PactEncodable.EncodingError)
 				XCTAssertTrue(testResult.localizedDescription.contains("Error casting \'[\(testDateString) "))
@@ -182,7 +180,6 @@ class AnyEncodableTests: XCTestCase {
 			_ = try PactEncodable(value: testableObject.failingDict).encoded().node
 			XCTFail("Expected the EncodableWrapper to throw!")
 		} catch {
-			print(error)
 			do {
 				let testResult = try XCTUnwrap(error as? PactEncodable.EncodingError)
 				XCTAssertTrue(testResult.localizedDescription.contains("Error casting \'[\"foo\":"))
