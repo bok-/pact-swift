@@ -28,6 +28,7 @@ struct Pact: Encodable {
 		]
 	}
 
+	// TODO: - This should be a `func asData() throws -> Data`
 	var data: Data? {
 		do {
 			return try JSONEncoder().encode(self)

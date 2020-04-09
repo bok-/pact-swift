@@ -22,6 +22,7 @@ extension Response: Encodable {
 		case statusCode = "status"
 		case headers
 		case body
+		case matchingRules
 	}
 
 	///

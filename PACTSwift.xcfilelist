@@ -1,10 +1,10 @@
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Pact.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Extensions/Dictionary+Pact.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Extensions/Bundle+Pact.swift
-$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/Expression.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/SomethingLike.swift
-$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/EachLike.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/Matcher.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/MatcherSpec2.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/MatchingRuleExpressible.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Metadata.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/PactInteractionNode.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/PactEncodable.swift
