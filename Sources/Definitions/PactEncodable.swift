@@ -76,9 +76,7 @@ private extension PactEncodable {
 	func process(_ array: [Any], at node: String) throws -> [AnyEncodable] {
 		var encodableArray = [AnyEncodable]()
 		do {
-			_ = try array.map {
-				encodableArray.append(try process(element: $0, at: node)!)
-			}
+			try array.enumerated().forEach { encodableArray.append(try process(element: $0.element, at: node)!) }
 			return encodableArray
 		} catch {
 			throw EncodingError.notEncodable(array)
@@ -88,6 +86,11 @@ private extension PactEncodable {
 	func process(_ dictionary: [String: Any], at node: String) throws -> [String: AnyEncodable] {
 		var encodableDictionary = [String: AnyEncodable]()
 		do {
+			try dictionary.enumerated().forEach { dict in
+				let childElement = try process(element: dict.element.value, at: dict.element.key)!
+				encodableDictionary = merge(encodableDictionary, with: [dict.element.key: childElement])
+			}
+
 			_ = try dictionary.map {
 				let childElement = try process(element: $1, at: $0)!
 				encodableDictionary = merge(encodableDictionary, with: [$0: childElement])
