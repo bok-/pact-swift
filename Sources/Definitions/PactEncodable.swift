@@ -26,9 +26,9 @@ struct PactEncodable {
 	/// - `Array<Encodable>`
 	/// - `Dictionary<String, Encodable>`
 	///
-	func asEncodable() throws -> AnyEncodable? {
+	func encoded(node: PactInteractionNode) throws -> AnyEncodable? {
 		do {
-			return try process(element: typeDefinition, at: "body")
+			return try process(element: typeDefinition, at: node.rawValue)
 		} catch {
 			throw EncodingError.notEncodable(typeDefinition)
 		}
@@ -56,12 +56,12 @@ extension PactEncodable {
 
 private extension PactEncodable {
 
-	func process(element: Any, at path: String) throws -> AnyEncodable? {
+	func process(element: Any, at node: String) throws -> AnyEncodable? {
 		let encodedElement: AnyEncodable?
 
 		switch element {
-		case let array as [Any]: encodedElement = AnyEncodable(try process(array, at: path))
-		case let dict as [String: Any]: encodedElement = AnyEncodable(try process(dict, at: path))
+		case let array as [Any]: encodedElement = AnyEncodable(try process(array, at: node))
+		case let dict as [String: Any]: encodedElement = AnyEncodable(try process(dict, at: node))
 		case let string as String: encodedElement = AnyEncodable(string)
 		case let integer as Int: encodedElement = AnyEncodable(integer)
 		case let double as Double: encodedElement = AnyEncodable(double)
@@ -73,11 +73,11 @@ private extension PactEncodable {
 		return encodedElement
 	}
 
-	func process(_ array: [Any], at path: String) throws -> [AnyEncodable] {
+	func process(_ array: [Any], at node: String) throws -> [AnyEncodable] {
 		var encodableArray = [AnyEncodable]()
 		do {
 			_ = try array.map {
-				encodableArray.append(try process(element: $0, at: path)!)
+				encodableArray.append(try process(element: $0, at: node)!)
 			}
 			return encodableArray
 		} catch {
@@ -85,7 +85,7 @@ private extension PactEncodable {
 		}
 	}
 
-	func process(_ dictionary: [String: Any], at path: String) throws -> [String: AnyEncodable] {
+	func process(_ dictionary: [String: Any], at node: String) throws -> [String: AnyEncodable] {
 		var encodableDictionary = [String: AnyEncodable]()
 		do {
 			_ = try dictionary.map {
