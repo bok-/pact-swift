@@ -16,7 +16,8 @@ struct PactEncodable {
 		self.typeDefinition = value
 	}
 
-	/// Returns a tuple of a Pact Contract interaction's node object (eg, request `body`) and its corresponding matching rules.
+	/// Returns a tuple of a Pact Contract interaction's node object (eg, request `body`)
+	/// and its corresponding matching rules.
 	/// It erases node object's type and casts the node and leaf values into an `Encodable` safe type.
 	///
 	/// Transforms the following suppoerted types into `AnyEncodable`:
@@ -27,7 +28,7 @@ struct PactEncodable {
 	/// - `Array<Encodable>`
 	/// - `Dictionary<String, Encodable>`
 	///
-	func encoded() throws -> (node: AnyEncodable?, rules: Any?) {
+	func encoded() throws -> (node: AnyEncodable?, rules: AnyEncodable?) {
 		do {
 			let value = try process(element: typeDefinition, at: "")
 			return (node: value, rules: nil)

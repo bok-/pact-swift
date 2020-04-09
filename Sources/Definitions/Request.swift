@@ -25,6 +25,7 @@ extension Request: Encodable {
 		case query
 		case headers
 		case body
+		case matchingRules
 	}
 
 	///
@@ -44,9 +45,12 @@ extension Request: Encodable {
 		self.body = body
 
 		var encodableBody: AnyEncodable?
+		var matchingRules: AnyEncodable?
 		if let body = body {
 			do {
-				encodableBody = try PactEncodable(value: body).encoded().node
+				let pactEncoded = try PactEncodable(value: body).encoded()
+				encodableBody = pactEncoded.node
+				matchingRules = pactEncoded.rules
 			} catch {
 				fatalError("Can not instantiate a `Request` with non-encodable `body`.")
 			}
@@ -59,6 +63,7 @@ extension Request: Encodable {
 			if let query = query { try container.encode(query, forKey: .query) }
 			if let headers = headers { try container.encode(headers, forKey: .headers) }
 			if let encodableBody = encodableBody { try container.encode(encodableBody, forKey: .body) }
+			if let matchingRules = matchingRules { try container.encode(matchingRules, forKey: .matchingRules)}
 		}
 	}
 
