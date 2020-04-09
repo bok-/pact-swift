@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct EncodableWrapper {
+struct PactEncodable {
 
 	let typeDefinition: Any
 
-	init(for value: Any) {
+	init(value: Any) {
 		self.typeDefinition = value
 	}
 
@@ -28,7 +28,7 @@ struct EncodableWrapper {
 	///
 	func asEncodable() throws -> AnyEncodable? {
 		do {
-			return try process(element: typeDefinition)
+			return try process(element: typeDefinition, at: "body")
 		} catch {
 			throw EncodingError.notEncodable(typeDefinition)
 		}
@@ -36,7 +36,7 @@ struct EncodableWrapper {
 
 }
 
-extension EncodableWrapper {
+extension PactEncodable {
 
 	enum EncodingError: Error {
 		case notEncodable(Any?)
@@ -54,14 +54,14 @@ extension EncodableWrapper {
 
 }
 
-private extension EncodableWrapper {
+private extension PactEncodable {
 
-	func process(element: Any) throws -> AnyEncodable? {
+	func process(element: Any, at path: String) throws -> AnyEncodable? {
 		let encodedElement: AnyEncodable?
 
 		switch element {
-		case let array as [Any]: encodedElement = AnyEncodable(try processArray(array))
-		case let dict as [String: Any]: encodedElement = AnyEncodable(try processDictionary(dict))
+		case let array as [Any]: encodedElement = AnyEncodable(try process(array, at: path))
+		case let dict as [String: Any]: encodedElement = AnyEncodable(try process(dict, at: path))
 		case let string as String: encodedElement = AnyEncodable(string)
 		case let integer as Int: encodedElement = AnyEncodable(integer)
 		case let double as Double: encodedElement = AnyEncodable(double)
@@ -73,11 +73,11 @@ private extension EncodableWrapper {
 		return encodedElement
 	}
 
-	func processArray(_ array: [Any]) throws -> [AnyEncodable] {
+	func process(_ array: [Any], at path: String) throws -> [AnyEncodable] {
 		var encodableArray = [AnyEncodable]()
 		do {
 			_ = try array.map {
-				encodableArray.append(try process(element: $0)!)
+				encodableArray.append(try process(element: $0, at: path)!)
 			}
 			return encodableArray
 		} catch {
@@ -85,11 +85,11 @@ private extension EncodableWrapper {
 		}
 	}
 
-	func processDictionary(_ dictionary: [String: Any]) throws -> [String: AnyEncodable] {
+	func process(_ dictionary: [String: Any], at path: String) throws -> [String: AnyEncodable] {
 		var encodableDictionary = [String: AnyEncodable]()
 		do {
 			_ = try dictionary.map {
-				let childElement = try process(element: $1)!
+				let childElement = try process(element: $1, at: $0)!
 				encodableDictionary = merge(encodableDictionary, with: [$0: childElement])
 			}
 			return encodableDictionary
