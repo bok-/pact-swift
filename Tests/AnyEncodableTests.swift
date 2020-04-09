@@ -14,7 +14,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_StringValue() {
 		do {
-			let anyEncodedObject = try PactEncodable(value: ["Foo": "Bar"]).encoded(node: .body)
+			let anyEncodedObject = try PactEncodable(value: ["Foo": "Bar"]).encoded().node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertEqual(testResult, #"{"Foo":"Bar"}"#)
 		} catch {
@@ -24,7 +24,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_IntegerValue() {
 		do {
-			let anyEncodedObject = try PactEncodable(value: ["Foo": 123]).encoded(node: .body)
+			let anyEncodedObject = try PactEncodable(value: ["Foo": 123]).encoded().node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertEqual(testResult, #"{"Foo":123}"#)
 		} catch {
@@ -34,7 +34,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_DoubleValue() {
 		do {
-			let anyEncodedObject = try PactEncodable(value: ["Foo": Double(123.45)]).encoded(node: .body)
+			let anyEncodedObject = try PactEncodable(value: ["Foo": Double(123.45)]).encoded().node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertEqual(testResult, #"{"Foo":123.45}"#)
 		} catch {
@@ -44,7 +44,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_DecimalValue() {
 		do {
-			let anyEncodedObject = try PactEncodable(value: ["Foo": Decimal(string: "123.45")]).encoded(node: .body)
+			let anyEncodedObject = try PactEncodable(value: ["Foo": Decimal(string: "123.45")]).encoded().node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertEqual(testResult, #"{"Foo":123.45}"#)
 		} catch {
@@ -54,7 +54,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_BoolValue() {
 		do {
-			let anyEncodedObject = try PactEncodable(value: ["Foo": true]).encoded(node: .body)
+			let anyEncodedObject = try PactEncodable(value: ["Foo": true]).encoded().node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertEqual(testResult, #"{"Foo":true}"#)
 		} catch {
@@ -64,7 +64,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_ArrayOfStringsValue() {
 		do {
-			let anyEncodedObject = try PactEncodable(value: ["Foo": ["Bar", "Baz"]]).encoded(node: .body)
+			let anyEncodedObject = try PactEncodable(value: ["Foo": ["Bar", "Baz"]]).encoded().node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertEqual(testResult, #"{"Foo":["Bar","Baz"]}"#)
 		} catch {
@@ -74,7 +74,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_ArrayOfDoublesValue() {
 		do {
-			let anyEncodedObject = try PactEncodable(value: ["Foo": [Double(123.45), Double(789.23)]]).encoded(node: .body)
+			let anyEncodedObject = try PactEncodable(value: ["Foo": [Double(123.45), Double(789.23)]]).encoded().node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertTrue(testResult.contains("789.23")) // NOT THE RIGHT WAY TO TEST THIS! But it will do for now.
 			XCTAssertTrue(testResult.contains(#"{"Foo":[123."#))
@@ -85,7 +85,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_DictionaryValue() {
 		do {
-			let anyEncodedObject =  try PactEncodable(value: ["Foo": ["Bar": "Baz"]]).encoded(node: .body)
+			let anyEncodedObject =  try PactEncodable(value: ["Foo": ["Bar": "Baz"]]).encoded().node
 			let testResult = try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!"))
 			XCTAssertEqual(String(data: testResult, encoding: .utf8), #"{"Foo":{"Bar":"Baz"}}"#)
 		} catch {
@@ -105,7 +105,7 @@ class AnyEncodableTests: XCTestCase {
 						"two": true
 					]
 				]
-			).encoded(node: .body)
+			).encoded().node
 
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 
@@ -130,7 +130,7 @@ class AnyEncodableTests: XCTestCase {
 		}
 
 		do {
-			_ = try PactEncodable(value: FailingTestModel()).encoded(node: .body)
+			_ = try PactEncodable(value: FailingTestModel()).encoded().node
 			XCTFail("Expected the EncodableWrapper to throw!")
 		} catch {
 			print(error)
@@ -158,7 +158,7 @@ class AnyEncodableTests: XCTestCase {
 		let testableObject = FailingTestModel(array: [testDate])
 
 		do {
-			_ = try PactEncodable(value: testableObject.failingArray).encoded(node: .body)
+			_ = try PactEncodable(value: testableObject.failingArray).encoded().node
 			XCTFail("Expected the EncodableWrapper to throw!")
 		} catch {
 			print(error)
@@ -179,7 +179,7 @@ class AnyEncodableTests: XCTestCase {
 		let testableObject = FailingTestModel()
 
 		do {
-			_ = try PactEncodable(value: testableObject.failingDict).encoded(node: .body)
+			_ = try PactEncodable(value: testableObject.failingDict).encoded().node
 			XCTFail("Expected the EncodableWrapper to throw!")
 		} catch {
 			print(error)

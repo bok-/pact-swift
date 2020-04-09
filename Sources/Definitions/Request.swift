@@ -46,7 +46,7 @@ extension Request: Encodable {
 		var encodableBody: AnyEncodable?
 		if let body = body {
 			do {
-				encodableBody = try PactEncodable(value: body).encoded(node: .body)
+				encodableBody = try PactEncodable(value: body).encoded().node
 			} catch {
 				fatalError("Can not instantiate a `Request` with non-encodable `body`.")
 			}
