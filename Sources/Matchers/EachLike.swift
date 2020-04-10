@@ -14,7 +14,7 @@ public struct EachLike<T: Encodable>: MatchingRuleExpressible {
 	let min: Int?
 	let max: Int?
 
-	var rule: [String : String] {
+	var rule: [String: String] {
 		var ruleValue = ["match": "type"]
 		if let min = min { ruleValue["min"] = "\(min)" }
 		if let max = max { ruleValue["max"] = "\(max)" }

@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AD01C9312432A1A400B75C9D /* MatcherSpec2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01C9302432A1A400B75C9D /* MatcherSpec2Tests.swift */; };
-		AD01C9382432A28A00B75C9D /* MatcherSpec2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01C9372432A28A00B75C9D /* MatcherSpec2.swift */; };
 		AD641A332434331300785CE1 /* Bundle+Pact.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A322434331300785CE1 /* Bundle+Pact.swift */; };
 		AD641A352434345500785CE1 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A342434345500785CE1 /* Metadata.swift */; };
 		AD641A382434355C00785CE1 /* MetadataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A372434355C00785CE1 /* MetadataTests.swift */; };
@@ -46,8 +44,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AD01C9302432A1A400B75C9D /* MatcherSpec2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatcherSpec2Tests.swift; sourceTree = "<group>"; };
-		AD01C9372432A28A00B75C9D /* MatcherSpec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatcherSpec2.swift; sourceTree = "<group>"; };
 		AD2CB262242CC0A000D991F0 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
 		AD2CB263242CC0B900D991F0 /* Project-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Release.xcconfig"; sourceTree = "<group>"; };
 		AD2CB264242CC10600D991F0 /* Target-Framework-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Framework-Debug.xcconfig"; sourceTree = "<group>"; };
@@ -111,18 +107,9 @@
 		AD01C9392432A31F00B75C9D /* Matchers */ = {
 			isa = PBXGroup;
 			children = (
-				AD01C9372432A28A00B75C9D /* MatcherSpec2.swift */,
 				AD8DF43A243EEF390062CB1A /* MatchingRuleExpressible.swift */,
 				AD8DF438243EEBDB0062CB1A /* SomethingLike.swift */,
 				AD8DF43E244055980062CB1A /* EachLike.swift */,
-			);
-			path = Matchers;
-			sourceTree = "<group>";
-		};
-		AD01C93A2432A32A00B75C9D /* Matchers */ = {
-			isa = PBXGroup;
-			children = (
-				AD01C9302432A1A400B75C9D /* MatcherSpec2Tests.swift */,
 			);
 			path = Matchers;
 			sourceTree = "<group>";
@@ -212,7 +199,6 @@
 			children = (
 				AD8DF432243C437F0062CB1A /* AnyEncodableTests.swift */,
 				AD641A362434354C00785CE1 /* Definitions */,
-				AD01C93A2432A32A00B75C9D /* Matchers */,
 				AD641A3F2434518500785CE1 /* PactTests.swift */,
 			);
 			path = Tests;
@@ -449,7 +435,6 @@
 				AD641A422434588200785CE1 /* Interaction.swift in Sources */,
 				AD641A3A24344D9500785CE1 /* Pact.swift in Sources */,
 				AD8DF439243EEBDB0062CB1A /* SomethingLike.swift in Sources */,
-				AD01C9382432A28A00B75C9D /* MatcherSpec2.swift in Sources */,
 				ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */,
 				ADB7C11D2432D41F00A16CDE /* Dictionary+Pact.swift in Sources */,
 				AD8DF437243EA4580062CB1A /* PactInteractionNode.swift in Sources */,
@@ -464,7 +449,6 @@
 				AD641A3E24344FA100785CE1 /* PacticipantTests.swift in Sources */,
 				AD641A402434518500785CE1 /* PactTests.swift in Sources */,
 				AD641A382434355C00785CE1 /* MetadataTests.swift in Sources */,
-				AD01C9312432A1A400B75C9D /* MatcherSpec2Tests.swift in Sources */,
 				AD8DF433243C437F0062CB1A /* AnyEncodableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

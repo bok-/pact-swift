@@ -241,11 +241,41 @@ class PactTests: XCTestCase {
 			"data": [
 				"array1": [
 					[
-						"dob": SomethingLike("2016-07-19"),
+						"dob": "2016-07-19",
 						"id": SomethingLike(1600309982),
 						"name": SomethingLike("FVsWAGZTFGPLhWjLuBOd")
 					]
 				],
+
+
+// the `array1` should be wrapped in an EachLike([...], min: 1)
+// but compiler complains - should do `$.data.array1[*].name` -> match Type
+//				"array1": EachLike(
+//					[
+//						"dob": "2016-07-19",
+//						"id": SomethingLike(1600309982),
+//						"name": SomethingLike("FVsWAGZTFGPLhWjLuBOd")
+//					]
+//				, min: 1),
+//
+// And this should be the Pact matchingRules output (still need to figure out the [*]):
+//				"$.data.array1": {
+//						"matchers": [
+//							{ "min": 1, "match": "type" }
+//						]
+//				},
+//				"$.data.array1[*].name": {
+//						 "matchers": [
+//							 { "match": "type" }
+//						 ]
+//				 },
+//				 "$.data.array1[*].id": {
+//						 "matchers": [
+//							 { "match": "type" }
+//						 ]
+//				 }
+
+
 				"array2": [
 					[
 						"address": "127.0.0.1",
