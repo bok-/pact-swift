@@ -26,7 +26,7 @@
 		AD8DF437243EA4580062CB1A /* PactInteractionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8DF436243EA4580062CB1A /* PactInteractionNode.swift */; };
 		AD8DF439243EEBDB0062CB1A /* SomethingLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8DF438243EEBDB0062CB1A /* SomethingLike.swift */; };
 		AD8DF43B243EEF390062CB1A /* MatchingRuleExpressible.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8DF43A243EEF390062CB1A /* MatchingRuleExpressible.swift */; };
-		AD8DF43D243EF3900062CB1A /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8DF43C243EF3900062CB1A /* Matcher.swift */; };
+		AD8DF43F244055980062CB1A /* EachLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8DF43E244055980062CB1A /* EachLike.swift */; };
 		ADB7C11D2432D41F00A16CDE /* Dictionary+Pact.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */; };
 		ADB7C1612433269B00A16CDE /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1602433269B00A16CDE /* Request.swift */; };
 		ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */; };
@@ -77,7 +77,7 @@
 		AD8DF436243EA4580062CB1A /* PactInteractionNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactInteractionNode.swift; sourceTree = "<group>"; };
 		AD8DF438243EEBDB0062CB1A /* SomethingLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomethingLike.swift; sourceTree = "<group>"; };
 		AD8DF43A243EEF390062CB1A /* MatchingRuleExpressible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingRuleExpressible.swift; sourceTree = "<group>"; };
-		AD8DF43C243EF3900062CB1A /* Matcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matcher.swift; sourceTree = "<group>"; };
+		AD8DF43E244055980062CB1A /* EachLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachLike.swift; sourceTree = "<group>"; };
 		ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Pact.swift"; sourceTree = "<group>"; };
 		ADB7C1602433269B00A16CDE /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactHTTPMethod.swift; sourceTree = "<group>"; };
@@ -114,7 +114,7 @@
 				AD01C9372432A28A00B75C9D /* MatcherSpec2.swift */,
 				AD8DF43A243EEF390062CB1A /* MatchingRuleExpressible.swift */,
 				AD8DF438243EEBDB0062CB1A /* SomethingLike.swift */,
-				AD8DF43C243EF3900062CB1A /* Matcher.swift */,
+				AD8DF43E244055980062CB1A /* EachLike.swift */,
 			);
 			path = Matchers;
 			sourceTree = "<group>";
@@ -444,8 +444,8 @@
 				AD641A352434345500785CE1 /* Metadata.swift in Sources */,
 				ADE2937F2435DB14008AFBC9 /* ProviderState.swift in Sources */,
 				AD641A332434331300785CE1 /* Bundle+Pact.swift in Sources */,
-				AD8DF43D243EF3900062CB1A /* Matcher.swift in Sources */,
 				ADB7C1612433269B00A16CDE /* Request.swift in Sources */,
+				AD8DF43F244055980062CB1A /* EachLike.swift in Sources */,
 				AD641A422434588200785CE1 /* Interaction.swift in Sources */,
 				AD641A3A24344D9500785CE1 /* Pact.swift in Sources */,
 				AD8DF439243EEBDB0062CB1A /* SomethingLike.swift in Sources */,
