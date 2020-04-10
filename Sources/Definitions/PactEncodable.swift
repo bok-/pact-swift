@@ -84,8 +84,9 @@ private extension PactEncodable {
 		case let bool as Bool:
 			processedElement = (node: AnyEncodable(bool), rules: [:])
 		case let matcher as MatchingRuleExpressible:
+			let processedMatcherValue = try process(element: matcher.value, at: node)
 			processedElement = (
-				node: matcher.value,
+				node: processedMatcherValue.node,
 				rules: [node: AnyEncodable(["matchers": [AnyEncodable(matcher.rule)]])]
 			)
 		default:

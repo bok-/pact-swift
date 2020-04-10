@@ -239,13 +239,20 @@ class PactTests: XCTestCase {
 			],
 			"fuu": ["xyz", SomethingLike("abc")],
 			"data": [
-				"array1": [
+				"array1": EachLike( // Doesn't like it as SomethingLike() isn't Encodable?
 					[
-						"dob": "2016-07-19",
-						"id": SomethingLike(1600309982),
+						"dob": SomethingLike("2016-07-19"),
+						"id": SomethingLike("1600309982"),
 						"name": SomethingLike("FVsWAGZTFGPLhWjLuBOd")
 					]
-				],
+				),
+//				"array1": [
+//					[
+//						"dob": SomethingLike("2016-07-19"),
+//						"id": SomethingLike(1600309982),
+//						"name": SomethingLike("FVsWAGZTFGPLhWjLuBOd")
+//					]
+//				],
 
 
 // the `array1` should be wrapped in an EachLike([...], min: 1)
@@ -297,6 +304,12 @@ class PactTests: XCTestCase {
 			]
 		]
 
+//		let anotherBody: Any = [
+//			EachLike([
+//				"foo": SomethingLike("bar").value
+//			])
+//		]
+
 		let interaction = Interaction(
 			description: "test Encodable Pact",
 			providerStates: [firstProviderState],
@@ -322,7 +335,49 @@ class PactTests: XCTestCase {
 		
 	}
 
+	func testPact_SetsRequestBody_EmbeddedMatchingRules() {
+		let firstProviderState = ProviderState(name: "an alligator with the given name exists", params: ["name": "Mary"])
+
+		let testBody: Any = [
+			"data": [
+				"array1": EachLike( // Doesn't like it as SomethingLike() isn't Encodable?
+					[
+						"dob": SomethingLike("2016-07-19"),
+						"id": SomethingLike("1600309982"),
+						"name": SomethingLike("FVsWAGZTFGPLhWjLuBOd")
+					],
+					min: 1
+				)
+			]
+		]
+
+		let interaction = Interaction(
+			description: "test Encodable Pact",
+			providerStates: [firstProviderState],
+			request: Request(
+				method: .GET,
+				path: "/",
+				query: ["max_results": ["100"]],
+				headers: ["Content-Type": "applicatoin/json; charset=UTF-8", "X-Value": "testCode"],
+				body: testBody
+			),
+			response: Response(
+				statusCode: 200
+			)
+		)
+
+		let testPact = Pact(
+			consumer: Pacticipant.consumer("test-consumer"),
+			provider: Pacticipant.provider("test-provider"),
+			interactions: [interaction]
+		)
+
+		debugPrint(NSString(string: String(data: testPact.data!, encoding: .utf8)!))
+
+	}
+
 }
+
 
 private extension PactTests {
 
