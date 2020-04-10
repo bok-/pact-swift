@@ -9,6 +9,8 @@
 import Foundation
 
 protocol MatchingRuleExpressible {
-	var value: Any { get set }
+
+	var value: AnyEncodable { get }
 	var rule: [String: String] { get }
+
 }

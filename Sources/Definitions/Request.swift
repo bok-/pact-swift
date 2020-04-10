@@ -48,7 +48,7 @@ extension Request: Encodable {
 		var matchingRules: AnyEncodable?
 		if let body = body {
 			do {
-				let pactEncoded = try PactEncodable(value: body).encoded()
+				let pactEncoded = try PactEncodable(value: body).encoded(for: .body)
 				encodableBody = pactEncoded.node
 				matchingRules = pactEncoded.rules
 			} catch {

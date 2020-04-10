@@ -235,10 +235,36 @@ class PactTests: XCTestCase {
 			"foo": SomethingLike("Bar"),
 			"baz": SomethingLike(200.0),
 			"bar": [
-				"goo": 123.45
+				"goo": SomethingLike(123.45)
 			],
-			"fuu": ["xyz", "abc"],
-			"num": [1, 2, 3]
+			"fuu": ["xyz", SomethingLike("abc")],
+			"data": [
+				"array1": [
+					[
+						"dob": SomethingLike("2016-07-19"),
+						"id": SomethingLike(1600309982),
+						"name": SomethingLike("FVsWAGZTFGPLhWjLuBOd")
+					]
+				],
+				"array2": [
+					[
+						"address": "127.0.0.1",
+						"name": "jvxrzduZnwwxpFYrQnpd"
+					]
+				],
+				"array3": [
+					[
+							[
+									"itemCount": 652571349
+							]
+					]
+				]
+			],
+			"num": EachLike(1, min: 2),
+			"bool": [
+				"false": SomethingLike(false),
+				"true": SomethingLike(true)
+			]
 		]
 
 		let interaction = Interaction(
@@ -262,7 +288,7 @@ class PactTests: XCTestCase {
 			interactions: [interaction]
 		)
 
-		debugPrint(String(data: testPact.data!, encoding: .utf8)!)
+		debugPrint(NSString(string: String(data: testPact.data!, encoding: .utf8)!))
 		
 	}
 
@@ -274,10 +300,13 @@ private extension PactTests {
 
 	struct TestPactModel: Decodable {
 		let interactions: [TestInteractionModel]
+
 		struct TestInteractionModel: Decodable {
 			let request: TestRequestModel
+
 			struct TestRequestModel: Decodable {
 				let body: TestBodyModel
+
 				struct TestBodyModel: Decodable {
 					let foo: String
 					let baz: Double
@@ -286,7 +315,9 @@ private extension PactTests {
 					let num: [Int]
 				}
 			}
+
 		}
+
 	}
 
 	// MARK: - Test Helper functions

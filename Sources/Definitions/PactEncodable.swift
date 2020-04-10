@@ -28,20 +28,12 @@ struct PactEncodable {
 	/// - `Array<Encodable>`
 	/// - `Dictionary<String, Encodable>`
 	///
-	func encoded(for interactionNode: PactInteractionNode = .body) throws -> (node: AnyEncodable?, rules: AnyEncodable?) {
+	func encoded(for interactionNode: PactInteractionNode) throws -> (node: AnyEncodable?, rules: AnyEncodable?) {
 		do {
 			let processedType = try process(element: typeDefinition, at: "$")
 			return (
 				node: processedType.node,
-				rules: AnyEncodable(
-					[
-						interactionNode.rawValue: AnyEncodable(
-							[
-								AnyEncodable(processedType.rules)
-							]
-						)
-					]
-				)
+				rules: AnyEncodable([interactionNode.rawValue: AnyEncodable(AnyEncodable(processedType.rules))])
 			)
 		} catch {
 			throw EncodingError.notEncodable(typeDefinition)
@@ -69,12 +61,10 @@ extension PactEncodable {
 
 }
 
-typealias PathWithMatchingRule = [String: AnyEncodable]
-
 private extension PactEncodable {
 
-	func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: PathWithMatchingRule) {
-		let processedElement: (node: AnyEncodable, rules: PathWithMatchingRule)
+	func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable]) {
+		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable])
 
 		switch element {
 		case let array as [Any]:
@@ -95,7 +85,7 @@ private extension PactEncodable {
 			processedElement = (node: AnyEncodable(bool), rules: [:])
 		case let matcher as MatchingRuleExpressible:
 			processedElement = (
-				node: AnyEncodable(Matcher(matcher)?.value),
+				node: matcher.value,
 				rules: [node: AnyEncodable(["matchers": [AnyEncodable(matcher.rule)]])]
 			)
 		default:
@@ -105,24 +95,24 @@ private extension PactEncodable {
 		return processedElement
 	}
 
-	func process(_ array: [Any], at node: String) throws -> (node: [AnyEncodable], rules: PathWithMatchingRule) {
+	func process(_ array: [Any], at node: String) throws -> (node: [AnyEncodable], rules: [String: AnyEncodable]) {
 		var encodableArray = [AnyEncodable]()
-//		let matchingRules: AnyEncodable = nil
-
+		var matchingRules: [String: AnyEncodable] = [:]
 		do {
 			try array
 				.enumerated()
 				.forEach {
 					let childElement = try process(element: $0.element, at: "\(node)[\($0.offset)]")
 					encodableArray.append(childElement.node)
+					matchingRules = merge(matchingRules, with: childElement.rules)
 				}
-			return (node: encodableArray, rules: [:])
+			return (node: encodableArray, rules: matchingRules)
 		} catch {
 			throw EncodingError.notEncodable(array)
 		}
 	}
 
-	func process(_ dictionary: [String: Any], at node: String) throws -> (node: [String: AnyEncodable], rules: PathWithMatchingRule) {
+	func process(_ dictionary: [String: Any], at node: String) throws -> (node: [String: AnyEncodable], rules: [String: AnyEncodable]) {
 		var encodableDictionary: [String: AnyEncodable] = [:]
 		var matchingRules: [String: AnyEncodable] = [:]
 		do {

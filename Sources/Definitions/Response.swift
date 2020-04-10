@@ -39,7 +39,7 @@ extension Response: Encodable {
 		var encodableBody: AnyEncodable?
 		if let body = body {
 			do {
-				encodableBody = try PactEncodable(value: body).encoded().node
+				encodableBody = try PactEncodable(value: body).encoded(for: .body).node
 			} catch {
 				fatalError("Can not instatiate a `Response` with non-encodable `body`.")
 			}

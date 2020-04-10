@@ -28,10 +28,12 @@ struct Pact: Encodable {
 		]
 	}
 
-	// TODO: - This should be a `func asData() throws -> Data`
+	// TODO: - Should this be a `func asData() throws -> Data`
 	var data: Data? {
 		do {
-			return try JSONEncoder().encode(self)
+			let encoder = JSONEncoder()
+			encoder.outputFormatting = .prettyPrinted
+			return try encoder.encode(self)
 		} catch {
 			debugPrint("\(error)")
 		}
