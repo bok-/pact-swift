@@ -8,9 +8,9 @@
 
 import Foundation
 
-public struct EachLike<T: Encodable>: MatchingRuleExpressible {
+public struct EachLike: MatchingRuleExpressible {
 
-	let value: AnyEncodable // Value might need to be multiplied based on `min` and/or `max`
+	let value: Any
 	let min: Int?
 	let max: Int?
 
@@ -23,20 +23,20 @@ public struct EachLike<T: Encodable>: MatchingRuleExpressible {
 
 	// MARK: - Initializers
 
-	init(_ value: T) {
-		self.value = AnyEncodable([value])
+	init(_ value: Any) {
+		self.value = [value]
 		self.min = nil
 		self.max = nil
 	}
 
-	init(_ value: T, min: Int) {
-		self.value = AnyEncodable([value])
+	init(_ value: Any, min: Int) {
+		self.value = [value]
 		self.min = min
 		self.max = nil
 	}
 
-	init(_ value: T, max: Int) {
-		self.value = AnyEncodable([value])
+	init(_ value: Any, max: Int) {
+		self.value = [value]
 		self.min = nil
 		self.max = max
 	}

@@ -8,13 +8,13 @@
 
 import Foundation
 
-public struct SomethingLike<T: Encodable>: MatchingRuleExpressible {
+public struct SomethingLike: MatchingRuleExpressible {
 
-	let value: AnyEncodable
+	let value: Any
 	let rule: [String: String] = ["match": "type"]
 
-	init(_ value: T) {
-		self.value = AnyEncodable(value)
+	init(_ value: Any) {
+		self.value = value
 	}
 
 }
