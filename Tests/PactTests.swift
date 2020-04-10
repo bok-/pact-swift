@@ -228,6 +228,44 @@ class PactTests: XCTestCase {
 		}
 	}
 
+	func testPact_SetsRequestBody_MatchingRules() {
+		let firstProviderState = ProviderState(name: "an alligator with the given name exists", params: ["name": "Mary"])
+
+		let testBody: Any = [
+			"foo": SomethingLike("Bar"),
+			"baz": SomethingLike(200.0),
+			"bar": [
+				"goo": 123.45
+			],
+			"fuu": ["xyz", "abc"],
+			"num": [1, 2, 3]
+		]
+
+		let interaction = Interaction(
+			description: "test Encodable Pact",
+			providerStates: [firstProviderState],
+			request: Request(
+				method: .GET,
+				path: "/",
+				query: ["max_results": ["100"]],
+				headers: ["Content-Type": "applicatoin/json; charset=UTF-8", "X-Value": "testCode"],
+				body: testBody
+			),
+			response: Response(
+				statusCode: 200
+			)
+		)
+
+		let testPact = Pact(
+			consumer: Pacticipant.consumer("test-consumer"),
+			provider: Pacticipant.provider("test-provider"),
+			interactions: [interaction]
+		)
+
+		debugPrint(String(data: testPact.data!, encoding: .utf8)!)
+		
+	}
+
 }
 
 private extension PactTests {
