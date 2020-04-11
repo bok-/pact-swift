@@ -17,6 +17,7 @@
 		AD641A422434588200785CE1 /* Interaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A412434588200785CE1 /* Interaction.swift */; };
 		AD7891B724414D500014BCC8 /* PactBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891B624414D500014BCC8 /* PactBuilderTests.swift */; };
 		AD7891BA2441512E0014BCC8 /* SomethingLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891B92441512E0014BCC8 /* SomethingLikeTests.swift */; };
+		AD7891BC244156FC0014BCC8 /* EachLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891BB244156FC0014BCC8 /* EachLikeTests.swift */; };
 		AD881808242C715B00BF510D /* PactSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8817FE242C715A00BF510D /* PactSwift.framework */; };
 		AD88180F242C715B00BF510D /* PactSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD881801242C715A00BF510D /* PactSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD8A32D7242CCF5600283080 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = AD8A32D6242CCF5600283080 /* Scripts */; };
@@ -65,6 +66,7 @@
 		AD641A412434588200785CE1 /* Interaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interaction.swift; sourceTree = "<group>"; };
 		AD7891B624414D500014BCC8 /* PactBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactBuilderTests.swift; sourceTree = "<group>"; };
 		AD7891B92441512E0014BCC8 /* SomethingLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomethingLikeTests.swift; sourceTree = "<group>"; };
+		AD7891BB244156FC0014BCC8 /* EachLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachLikeTests.swift; sourceTree = "<group>"; };
 		AD8817FE242C715A00BF510D /* PactSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PactSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD881801242C715A00BF510D /* PactSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PactSwift.h; sourceTree = "<group>"; };
 		AD881802242C715A00BF510D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				AD7891B92441512E0014BCC8 /* SomethingLikeTests.swift */,
+				AD7891BB244156FC0014BCC8 /* EachLikeTests.swift */,
 			);
 			path = Matchers;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 			files = (
 				AD7891B724414D500014BCC8 /* PactBuilderTests.swift in Sources */,
 				AD7891BA2441512E0014BCC8 /* SomethingLikeTests.swift in Sources */,
+				AD7891BC244156FC0014BCC8 /* EachLikeTests.swift in Sources */,
 				AD641A3E24344FA100785CE1 /* PacticipantTests.swift in Sources */,
 				AD641A402434518500785CE1 /* PactTests.swift in Sources */,
 				AD641A382434355C00785CE1 /* MetadataTests.swift in Sources */,

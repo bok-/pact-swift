@@ -30,13 +30,4 @@ class SomethingLikeTests: XCTestCase {
 		}
 	}
 
-//	func testMatcher_SomethingLike_DefinesRule() {
-//		do {
-//			let testResult = SomethingLike("foo").rule as [String: String]
-//			XCTAssertEqual(testResult["match"], String(AnyEncodable("type")))
-//		} catch {
-//			XCTFail("Failed to unwrap a SomethingLike matcher's rule as [String: String]")
-//		}
-//	}
-
 }
