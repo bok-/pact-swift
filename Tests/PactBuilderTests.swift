@@ -27,7 +27,6 @@ class PactBuilderTests: XCTestCase {
 		} catch {
 			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
 		}
-
 	}
 
 	// MARK: - EachLike()
@@ -106,6 +105,22 @@ class PactBuilderTests: XCTestCase {
 		}
 	}
 
+	// MARK: - IntegerLike()
+
+	func testPact_SetsMatcher_ForIntegerLike() {
+		let testBody: Any = [
+			"data":  IntegerLike(1234)
+		]
+
+		let testPact = prepareTestPact(for: testBody)
+
+		do {
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SomethingLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+			XCTAssertEqual(testResult.match, "integer")
+		} catch {
+			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
+		}
+	}
 }
 
 // MARK: - Private Utils -
