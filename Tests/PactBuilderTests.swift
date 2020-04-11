@@ -105,6 +105,33 @@ class PactBuilderTests: XCTestCase {
 		}
 	}
 
+	func testPact_SetsMinMax_ForEachLikeMatcher() {
+		let testBody: Any = [
+			"data": [
+				"array1": EachLike(
+					[
+						"dob": SomethingLike("2016-07-19"),
+						"id": SomethingLike("1600309982"),
+						"name": SomethingLike("FVsWAGZTFGPLhWjLuBOd")
+					],
+					min: 1,
+					max: 5
+				)
+			]
+		]
+
+		let testPact = prepareTestPact(for: testBody)
+
+		do {
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(EachLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+			XCTAssertEqual(testResult.min, 1)
+			XCTAssertEqual(testResult.max, 5)
+			XCTAssertEqual(testResult.match, "type")
+		} catch {
+			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
+		}
+	}
+
 	// MARK: - IntegerLike()
 
 	func testPact_SetsMatcher_IntegerLike() {

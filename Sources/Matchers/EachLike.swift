@@ -41,4 +41,10 @@ public struct EachLike: MatchingRuleExpressible {
 		self.max = max
 	}
 
+	init(_ value: Any, min: Int, max: Int) {
+		self.value = [value]
+		self.min = min
+		self.max = max
+	}
+
 }

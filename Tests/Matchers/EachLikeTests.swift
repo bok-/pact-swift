@@ -64,4 +64,15 @@ class EachLikeTests: XCTestCase {
 		}
 	}
 
+	func testMatcher_EachLike_InitsWithMinAndMaxValue() {
+		do {
+			// Array of Strings
+			let testResult = try XCTUnwrap(EachLike("foo", min: 1, max: 5))
+			XCTAssertEqual(testResult.min, 1)
+			XCTAssertEqual(testResult.max, 5)
+		} catch {
+			XCTFail("Failed to unwrap a EachLike matcher's value")
+		}
+	}
+
 }
