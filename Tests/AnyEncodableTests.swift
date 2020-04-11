@@ -14,7 +14,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_StringValue() {
 		do {
-			let anyEncodedObject = try EncodableWrapper(value: ["Foo": "Bar"]).encodable()
+			let anyEncodedObject = try PactBuilder(with: ["Foo": "Bar"]).encoded(for: .body).node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertEqual(testResult, #"{"Foo":"Bar"}"#)
 		} catch {
@@ -24,7 +24,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_IntegerValue() {
 		do {
-			let anyEncodedObject = try EncodableWrapper(value: ["Foo": 123]).encodable()
+			let anyEncodedObject = try PactBuilder(with: ["Foo": 123]).encoded(for: .body).node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertEqual(testResult, #"{"Foo":123}"#)
 		} catch {
@@ -34,7 +34,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_DoubleValue() {
 		do {
-			let anyEncodedObject = try EncodableWrapper(value: ["Foo": Double(123.45)]).encodable()
+			let anyEncodedObject = try PactBuilder(with: ["Foo": Double(123.45)]).encoded(for: .body).node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertEqual(testResult, #"{"Foo":123.45}"#)
 		} catch {
@@ -44,7 +44,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_DecimalValue() {
 		do {
-			let anyEncodedObject = try EncodableWrapper(value: ["Foo": Decimal(string: "123.45")]).encodable()
+			let anyEncodedObject = try PactBuilder(with: ["Foo": Decimal(string: "123.45")]).encoded(for: .body).node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertEqual(testResult, #"{"Foo":123.45}"#)
 		} catch {
@@ -54,7 +54,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_BoolValue() {
 		do {
-			let anyEncodedObject = try EncodableWrapper(value: ["Foo": true]).encodable()
+			let anyEncodedObject = try PactBuilder(with: ["Foo": true]).encoded(for: .body).node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertEqual(testResult, #"{"Foo":true}"#)
 		} catch {
@@ -64,7 +64,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_ArrayOfStringsValue() {
 		do {
-			let anyEncodedObject = try EncodableWrapper(value: ["Foo": ["Bar", "Baz"]]).encodable()
+			let anyEncodedObject = try PactBuilder(with: ["Foo": ["Bar", "Baz"]]).encoded(for: .body).node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertEqual(testResult, #"{"Foo":["Bar","Baz"]}"#)
 		} catch {
@@ -74,7 +74,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_ArrayOfDoublesValue() {
 		do {
-			let anyEncodedObject = try EncodableWrapper(value: ["Foo": [Double(123.45), Double(789.23)]]).encodable()
+			let anyEncodedObject = try PactBuilder(with: ["Foo": [Double(123.45), Double(789.23)]]).encoded(for: .body).node
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 			XCTAssertTrue(testResult.contains("789.23")) // NOT THE RIGHT WAY TO TEST THIS! But it will do for now.
 			XCTAssertTrue(testResult.contains(#"{"Foo":[123."#))
@@ -85,7 +85,7 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_DictionaryValue() {
 		do {
-			let anyEncodedObject =  try EncodableWrapper(value: ["Foo": ["Bar": "Baz"]]).encodable()
+			let anyEncodedObject =  try PactBuilder(with: ["Foo": ["Bar": "Baz"]]).encoded(for: .body).node
 			let testResult = try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!"))
 			XCTAssertEqual(String(data: testResult, encoding: .utf8), #"{"Foo":{"Bar":"Baz"}}"#)
 		} catch {
@@ -95,8 +95,8 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_EmbeddedSafeJSONValues() {
 		do {
-			let anyEncodedObject = try EncodableWrapper(
-				value: [
+			let anyEncodedObject = try PactBuilder(
+				with: [
 					"Foo": 1,
 					"Bar": 1.23,
 					"Baz": ["Hello", "World"],
@@ -105,7 +105,7 @@ class AnyEncodableTests: XCTestCase {
 						"two": true
 					]
 				]
-			).encodable()
+			).encoded(for: .body).node
 
 			let testResult = try XCTUnwrap(String(data: try JSONEncoder().encode(try XCTUnwrap(anyEncodedObject, "Oh noez!")), encoding: .utf8))
 
@@ -120,6 +120,84 @@ class AnyEncodableTests: XCTestCase {
 		} catch {
 			XCTFail("Failed to unwrap or encode `anEncodedObject` into a `String`")
 		}
+	}
+
+	// MARK: - Testing throws
+
+	func testEncodableWrapper_Handles_InvalidInput() {
+		struct FailingTestModel {
+			let unsupportedDate = Date()
+		}
+
+		do {
+			_ = try PactBuilder(with: FailingTestModel()).encoded(for: .body).node
+			XCTFail("Expected the EncodableWrapper to throw!")
+		} catch {
+			do {
+				let testResult = try XCTUnwrap(error as? PactBuilder.EncodingError)
+				XCTAssertTrue(testResult.localizedDescription.contains("unsupportedDate"))
+			} catch {
+				XCTFail("Expected an EncodableWrapper.EncodingError to be thrown")
+			}
+		}
+	}
+
+	func testEncodableWrapper_Handles_InvalidArrayInput() {
+		let testDate = Date()
+		let testDateString = dateComponents(from: testDate)
+
+		struct FailingTestModel {
+			let failingArray: Array<Date>
+
+			init(array: [Date]) {
+				self.failingArray = array
+			}
+		}
+
+		let testableObject = FailingTestModel(array: [testDate])
+
+		do {
+			_ = try PactBuilder(with: testableObject.failingArray).encoded(for: .body).node
+			XCTFail("Expected the EncodableWrapper to throw!")
+		} catch {
+			do {
+				let testResult = try XCTUnwrap(error as? PactBuilder.EncodingError)
+				XCTAssertTrue(testResult.localizedDescription.contains("Error casting \'[\(testDateString) "))
+			} catch {
+				XCTFail("Expected an EncodableWrapper.EncodingError to be thrown")
+			}
+		}
+	}
+
+	func testEncodableWrapper_Handles_InvalidDictInput() {
+		struct FailingTestModel {
+			let failingDict = ["foo": Date()]
+		}
+
+		let testableObject = FailingTestModel()
+
+		do {
+			_ = try PactBuilder(with: testableObject.failingDict).encoded(for: .body).node
+			XCTFail("Expected the EncodableWrapper to throw!")
+		} catch {
+			do {
+				let testResult = try XCTUnwrap(error as? PactBuilder.EncodingError)
+				XCTAssertTrue(testResult.localizedDescription.contains("Error casting \'[\"foo\":"))
+			} catch {
+				XCTFail("Expected an EncodableWrapper.EncodingError to be thrown")
+			}
+		}
+	}
+
+}
+
+private extension AnyEncodableTests {
+
+	func dateComponents(from date: Date = Date()) -> String {
+		let format = DateFormatter()
+		format.dateFormat = "yyyy-MM-dd"
+		format.timeZone = TimeZone(identifier: "GMT")
+		return format.string(from: date)
 	}
 
 }

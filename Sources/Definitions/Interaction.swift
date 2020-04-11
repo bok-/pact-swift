@@ -16,6 +16,10 @@ struct Interaction: Encodable {
 	let request: Request
 	let response: Response
 
+}
+
+extension Interaction {
+
 	init(description: String, providerState: String, request: Request, response: Response) {
 		self.description = description
 		self.providerState = providerState

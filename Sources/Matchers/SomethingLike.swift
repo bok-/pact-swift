@@ -1,15 +1,20 @@
 //
-//  SomethingLike.swift
+//  TypeMatcher.swift
 //  PactSwift
 //
-//  Created by Marko Justinek on 31/3/20.
+//  Created by Marko Justinek on 9/4/20.
 //  Copyright © 2020 PACT Foundation. All rights reserved.
 //
 
-public struct SomethingLike {
+import Foundation
 
-	let value: Any
+public struct SomethingLike: MatchingRuleExpressible {
 
+	internal let value: Any
+	internal let rule: [String: AnyEncodable] = ["match": AnyEncodable("type")]
+
+	// MARK: - Initializers
+	
 	init(_ value: Any) {
 		self.value = value
 	}

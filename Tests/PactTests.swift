@@ -228,6 +228,8 @@ class PactTests: XCTestCase {
 		}
 	}
 
+	
+
 }
 
 private extension PactTests {
@@ -236,10 +238,13 @@ private extension PactTests {
 
 	struct TestPactModel: Decodable {
 		let interactions: [TestInteractionModel]
+
 		struct TestInteractionModel: Decodable {
 			let request: TestRequestModel
+
 			struct TestRequestModel: Decodable {
 				let body: TestBodyModel
+
 				struct TestBodyModel: Decodable {
 					let foo: String
 					let baz: Double
@@ -248,7 +253,9 @@ private extension PactTests {
 					let num: [Int]
 				}
 			}
+
 		}
+
 	}
 
 	// MARK: - Test Helper functions
