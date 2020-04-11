@@ -12,14 +12,3 @@ func merge<Key, Value>(_ lhs: [Key: Value], with rhs: [Key: Value]) -> [Key: Val
 	rhs.forEach { result[$0] = $1 }
 	return result
 }
-
-extension Dictionary {
-
-	/// Adds [Key, Value] to the dictionary on which `add(_:) is being called` and replaces `Value` for existing `Key`.
-	func add(_ dictionary: [Key: Value]) -> [Key: Value] {
-		var dict: [Key: Value] = [:]
-		dictionary.forEach { dict[$0] = $1 }
-		return dict
-	}
-
-}
