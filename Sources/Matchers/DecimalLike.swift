@@ -11,7 +11,7 @@ import Foundation
 public struct DecimalLike: MatchingRuleExpressible {
 
 	internal let value: Any
-	internal let rule: [String: AnyEncodable] = ["match": AnyEncodable("decimal")]
+	internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("decimal")]]
 
 	// MARK: - Initializer
 

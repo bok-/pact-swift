@@ -87,7 +87,7 @@ private extension PactBuilder {
 			let processedMatcherValue = try process(element: matcher.value, at: node)
 			processedElement = (
 				node: processedMatcherValue.node,
-				rules: [node: AnyEncodable(["matchers": [AnyEncodable(matcher.rule)]])]
+				rules: [node: AnyEncodable(["matchers": AnyEncodable(matcher.rules)])]
 			)
 		default:
 			throw EncodingError.notEncodable(element)

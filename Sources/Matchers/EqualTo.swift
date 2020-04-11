@@ -11,7 +11,7 @@ import Foundation
 public struct EqualTo: MatchingRuleExpressible {
 
 	internal let value: Any
-	internal let rule: [String: AnyEncodable] = ["match": AnyEncodable("equality")]
+	internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("equality")]]
 
 	// MARK: - Initializers
 

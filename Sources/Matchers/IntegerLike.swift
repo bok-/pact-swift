@@ -11,7 +11,7 @@ import Foundation
 public struct IntegerLike: MatchingRuleExpressible {
 
 	internal let value: Any
-	internal let rule: [String: AnyEncodable] = ["match": AnyEncodable("integer")]
+	internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("integer")]]
 
 	// MARK: - Initializer
 

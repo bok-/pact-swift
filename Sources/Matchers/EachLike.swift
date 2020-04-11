@@ -14,11 +14,11 @@ public struct EachLike: MatchingRuleExpressible {
 	internal let min: Int?
 	internal let max: Int?
 
-	internal var rule: [String: AnyEncodable] {
+	internal var rules: [[String: AnyEncodable]] {
 		var ruleValue = ["match": AnyEncodable("type")]
 		if let min = min { ruleValue["min"] = AnyEncodable(min) }
 		if let max = max { ruleValue["max"] = AnyEncodable(max) }
-		return ruleValue
+		return [ruleValue]
 	}
 
 	// MARK: - Initializers

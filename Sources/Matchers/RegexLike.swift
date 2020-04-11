@@ -13,10 +13,12 @@ public struct RegexLike: MatchingRuleExpressible {
 	internal let value: Any
 	internal let term: String
 
-	internal var rule: [String: AnyEncodable] {
+	internal var rules: [[String: AnyEncodable]] {
 		[
-			"match": AnyEncodable("regex"),
-			"regex": AnyEncodable(term)
+			[
+				"match": AnyEncodable("regex"),
+				"regex": AnyEncodable(term)
+			]
 		]
 	}
 
