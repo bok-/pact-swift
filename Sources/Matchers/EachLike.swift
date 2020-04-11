@@ -25,7 +25,7 @@ public struct EachLike: MatchingRuleExpressible {
 
 	init(_ value: Any) {
 		self.value = [value]
-		self.min = nil
+		self.min = 1
 		self.max = nil
 	}
 
