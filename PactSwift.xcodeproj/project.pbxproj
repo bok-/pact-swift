@@ -40,6 +40,7 @@
 		ADD3C27024416891002E73B9 /* RegexLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD3C26F24416891002E73B9 /* RegexLike.swift */; };
 		ADD3C27224416A3E002E73B9 /* RegexLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD3C27124416A3E002E73B9 /* RegexLikeTests.swift */; };
 		ADD3C27424416CDF002E73B9 /* EqualTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD3C27324416CDF002E73B9 /* EqualTo.swift */; };
+		ADD3C27624416DAE002E73B9 /* IncludesLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD3C27524416DAE002E73B9 /* IncludesLike.swift */; };
 		ADE2937F2435DB14008AFBC9 /* ProviderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE2937E2435DB14008AFBC9 /* ProviderState.swift */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +100,7 @@
 		ADD3C26F24416891002E73B9 /* RegexLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexLike.swift; sourceTree = "<group>"; };
 		ADD3C27124416A3E002E73B9 /* RegexLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexLikeTests.swift; sourceTree = "<group>"; };
 		ADD3C27324416CDF002E73B9 /* EqualTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualTo.swift; sourceTree = "<group>"; };
+		ADD3C27524416DAE002E73B9 /* IncludesLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncludesLike.swift; sourceTree = "<group>"; };
 		ADD6993C242C85A200C5C2C2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		ADD6993D242C861600C5C2C2 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		ADE02804242CD6B7007BCDA1 /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				AD7891C124415E3E0014BCC8 /* DecimalLike.swift */,
 				AD8DF43E244055980062CB1A /* EachLike.swift */,
 				ADD3C27324416CDF002E73B9 /* EqualTo.swift */,
+				ADD3C27524416DAE002E73B9 /* IncludesLike.swift */,
 				AD7891BD24415C100014BCC8 /* IntegerLike.swift */,
 				AD8DF43A243EEF390062CB1A /* MatchingRuleExpressible.swift */,
 				ADD3C26F24416891002E73B9 /* RegexLike.swift */,
@@ -472,6 +475,7 @@
 				AD641A332434331300785CE1 /* Bundle+Pact.swift in Sources */,
 				ADB7C1612433269B00A16CDE /* Request.swift in Sources */,
 				AD8DF43F244055980062CB1A /* EachLike.swift in Sources */,
+				ADD3C27624416DAE002E73B9 /* IncludesLike.swift in Sources */,
 				AD7891C224415E3E0014BCC8 /* DecimalLike.swift in Sources */,
 				AD641A422434588200785CE1 /* Interaction.swift in Sources */,
 				AD641A3A24344D9500785CE1 /* Pact.swift in Sources */,

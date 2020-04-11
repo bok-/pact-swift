@@ -83,6 +83,17 @@ private extension PactBuilder {
 			processedElement = (node: AnyEncodable(decimal), rules: [:])
 		case let bool as Bool:
 			processedElement = (node: AnyEncodable(bool), rules: [:])
+		case let matcher as IncludesLike:
+			let processedMatcherValue = try process(element: matcher.value, at: node)
+			processedElement = (
+				node: processedMatcherValue.node,
+				rules: [
+					node: AnyEncodable([
+						"matchers": AnyEncodable(matcher.rules),
+						"combine": AnyEncodable(matcher.combine.rawValue)]
+					)
+				]
+			)
 		case let matcher as MatchingRuleExpressible:
 			let processedMatcherValue = try process(element: matcher.value, at: node)
 			processedElement = (

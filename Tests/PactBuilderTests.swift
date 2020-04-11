@@ -201,6 +201,48 @@ class PactBuilderTests: XCTestCase {
 		}
 	}
 
+	// MARK: - IncludesLike()
+
+	func testPact_SetsMatcher_IncludesLike_DefaultsToAND() {
+		let expectedValues = ["2020-12-31", "2019-12-31"]
+		let testBody: Any = [
+			"data":  IncludesLike("2020-12-31", "2019-12-31")
+		]
+
+		let testPact = prepareTestPact(for: testBody)
+
+		do {
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node)
+
+			XCTAssertEqual(testResult.combine, "AND")
+			XCTAssertEqual(testResult.matchers.count, 2)
+			XCTAssertTrue(testResult.matchers.allSatisfy { expectedValues.contains($0.value ?? "FAIL!") })
+			XCTAssertTrue(testResult.matchers.allSatisfy { $0.match == "include" })
+		} catch {
+			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
+		}
+	}
+
+	func testPact_SetsMatcher_IncludesLike_CombineMatchersWithOR() {
+		let expectedValues = ["2020-12-31", "2019-12-31"]
+		let testBody: Any = [
+			"data":  IncludesLike("2020-12-31", "2019-12-31", combine: .or)
+		]
+
+		let testPact = prepareTestPact(for: testBody)
+
+		do {
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node)
+
+			XCTAssertEqual(testResult.combine, "OR")
+			XCTAssertEqual(testResult.matchers.count, 2)
+			XCTAssertTrue(testResult.matchers.allSatisfy { expectedValues.contains($0.value ?? "FAIL!") })
+			XCTAssertTrue(testResult.matchers.allSatisfy { $0.match == "include" })
+		} catch {
+			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
+		}
+	}
+
 }
 
 // MARK: - Private Utils -
@@ -223,9 +265,11 @@ private extension PactBuilderTests {
 						}
 						struct TestMatchersModel: Decodable {
 							let matchers: [TestTypeModel]
+							let combine: String?
 							struct TestTypeModel: Decodable {
 								let match: String
 								let regex: String?
+								let value: String?
 							}
 						}
 					}
