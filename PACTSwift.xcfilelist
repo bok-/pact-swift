@@ -5,6 +5,7 @@ $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/SomethingLike.swif
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/EachLike.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/IntegerLike.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/MatchInteger.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/DecimalLike.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/MatchingRuleExpressible.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Metadata.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/PactInteractionNode.swift

@@ -14,7 +14,7 @@ class PactBuilderTests: XCTestCase {
 
 	// MARK: - SomethingLike()
 
-	func testPact_SetsMatcher_ForSomethingLike() {
+	func testPact_SetsMatcher_SomethingLike() {
 		let testBody: Any = [
 			"data":  SomethingLike("2016-07-19")
 		]
@@ -107,7 +107,7 @@ class PactBuilderTests: XCTestCase {
 
 	// MARK: - IntegerLike()
 
-	func testPact_SetsMatcher_ForIntegerLike() {
+	func testPact_SetsMatcher_IntegerLike() {
 		let testBody: Any = [
 			"data":  IntegerLike(1234)
 		]
@@ -117,6 +117,23 @@ class PactBuilderTests: XCTestCase {
 		do {
 			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SomethingLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
 			XCTAssertEqual(testResult.match, "integer")
+		} catch {
+			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
+		}
+	}
+
+	// MARK: - DecimalLike()
+
+	func testPact_SetsMatcher_DecimalLike() {
+		let testBody: Any = [
+			"data":  DecimalLike(1234)
+		]
+
+		let testPact = prepareTestPact(for: testBody)
+
+		do {
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SomethingLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+			XCTAssertEqual(testResult.match, "decimal")
 		} catch {
 			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
 		}

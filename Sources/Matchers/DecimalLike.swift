@@ -1,5 +1,5 @@
 //
-//  MatchInteger.swift
+//  DecimalLike.swift
 //  PactSwift
 //
 //  Created by Marko Justinek on 11/4/20.
@@ -8,15 +8,14 @@
 
 import Foundation
 
-public struct IntegerLike: MatchingRuleExpressible {
+public struct DecimalLike: MatchingRuleExpressible {
 
 	internal let value: Any
-	internal let rule: [String: AnyEncodable] = ["match": AnyEncodable("integer")]
+	internal let rule: [String: AnyEncodable] = ["match": AnyEncodable("decimal")]
 
 	// MARK: - Initializer
 
-	init(_ value: Int) {
+	init(_ value: Decimal) {
 		self.value = value
 	}
-
 }
