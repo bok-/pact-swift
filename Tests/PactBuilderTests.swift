@@ -22,7 +22,7 @@ class PactBuilderTests: XCTestCase {
 		let testPact = prepareTestPact(for: testBody)
 
 		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SomethingLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
 			XCTAssertEqual(testResult.match, "type")
 		} catch {
 			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
@@ -47,7 +47,7 @@ class PactBuilderTests: XCTestCase {
 		let testPact = prepareTestPact(for: testBody)
 
 		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(EachLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
 			XCTAssertEqual(testResult.min, 1)
 			XCTAssertEqual(testResult.match, "type")
 		} catch {
@@ -72,7 +72,7 @@ class PactBuilderTests: XCTestCase {
 		let testPact = prepareTestPact(for: testBody)
 
 		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(EachLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
 			XCTAssertEqual(testResult.min, 3)
 			XCTAssertEqual(testResult.match, "type")
 		} catch {
@@ -97,7 +97,7 @@ class PactBuilderTests: XCTestCase {
 		let testPact = prepareTestPact(for: testBody)
 
 		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(EachLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
 			XCTAssertEqual(testResult.max, 5)
 			XCTAssertEqual(testResult.match, "type")
 		} catch {
@@ -123,7 +123,7 @@ class PactBuilderTests: XCTestCase {
 		let testPact = prepareTestPact(for: testBody)
 
 		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(EachLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
 			XCTAssertEqual(testResult.min, 1)
 			XCTAssertEqual(testResult.max, 5)
 			XCTAssertEqual(testResult.match, "type")
@@ -142,7 +142,7 @@ class PactBuilderTests: XCTestCase {
 		let testPact = prepareTestPact(for: testBody)
 
 		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SomethingLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
 			XCTAssertEqual(testResult.match, "integer")
 		} catch {
 			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
@@ -159,12 +159,31 @@ class PactBuilderTests: XCTestCase {
 		let testPact = prepareTestPact(for: testBody)
 
 		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SomethingLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
 			XCTAssertEqual(testResult.match, "decimal")
 		} catch {
 			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
 		}
 	}
+
+	// MARK: - RegexLike()
+
+	func testPact_SetsMatcher_RegexLike() {
+		let testBody: Any = [
+			"data":  RegexLike("2020-12-31", term: "\\d{4}-\\d{2}-\\d{2}")
+		]
+
+		let testPact = prepareTestPact(for: testBody)
+
+		do {
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+			XCTAssertEqual(testResult.match, "regex")
+			XCTAssertEqual(testResult.regex, "\\d{4}-\\d{2}-\\d{2}")
+		} catch {
+			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
+		}
+	}
+
 }
 
 // MARK: - Private Utils -
@@ -172,7 +191,7 @@ class PactBuilderTests: XCTestCase {
 private extension PactBuilderTests {
 
 	// This model is tightly coupled with the SomethingLike Matcher
-	struct SomethingLikeTestModel: Decodable {
+	struct GenericLikeTestModel: Decodable {
 		let interactions: [TestInteractionModel]
 		struct TestInteractionModel: Decodable {
 			let request: TestRequestModel
@@ -189,6 +208,7 @@ private extension PactBuilderTests {
 							let matchers: [TestTypeModel]
 							struct TestTypeModel: Decodable {
 								let match: String
+								let regex: String?
 							}
 						}
 					}
@@ -198,7 +218,7 @@ private extension PactBuilderTests {
 	}
 
 	// This model is tightly coupled for the EachLike Matcher
-	struct EachLikeTestModel: Decodable {
+	struct SetLikeTestModel: Decodable {
 		let interactions: [TestInteractionModel]
 		struct TestInteractionModel: Decodable {
 			let request: TestRequestModel
