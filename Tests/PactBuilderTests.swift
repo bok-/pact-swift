@@ -12,6 +12,23 @@ import XCTest
 
 class PactBuilderTests: XCTestCase {
 
+	// MARK: - EqualTo()
+
+	func testPact_SetsMatcher_EqualTo() {
+		let testBody: Any = [
+			"data":  EqualTo("2016-07-19")
+		]
+
+		let testPact = prepareTestPact(for: testBody)
+
+		do {
+			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+			XCTAssertEqual(testResult.match, "equality")
+		} catch {
+			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
+		}
+	}
+
 	// MARK: - SomethingLike()
 
 	func testPact_SetsMatcher_SomethingLike() {
