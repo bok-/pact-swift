@@ -10,9 +10,11 @@ import Foundation
 
 public struct SomethingLike: MatchingRuleExpressible {
 
-	let value: Any
-	let rule: [String: String] = ["match": "type"]
+	internal let value: Any
+	internal let rule: [String: AnyEncodable] = ["match": AnyEncodable("type")]
 
+	// MARK: - Initializers
+	
 	init(_ value: Any) {
 		self.value = value
 	}

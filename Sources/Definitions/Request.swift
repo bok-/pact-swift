@@ -48,9 +48,9 @@ extension Request: Encodable {
 		var matchingRules: AnyEncodable?
 		if let body = body {
 			do {
-				let pactEncoded = try PactEncodable(value: body).encoded(for: .body)
-				encodableBody = pactEncoded.node
-				matchingRules = pactEncoded.rules
+				let pactBody = try PactBuilder(with: body).encoded(for: .body)
+				encodableBody = pactBody.node
+				matchingRules = pactBody.rules
 			} catch {
 				fatalError("Can not instantiate a `Request` with non-encodable `body`.")
 			}

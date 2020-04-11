@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct PactEncodable {
+struct PactBuilder {
 
 	let typeDefinition: Any
 
-	init(value: Any) {
+	init(with value: Any) {
 		self.typeDefinition = value
 	}
 
@@ -42,7 +42,7 @@ struct PactEncodable {
 
 }
 
-extension PactEncodable {
+extension PactBuilder {
 
 	enum EncodingError: Error {
 		case notEncodable(Any?)
@@ -61,7 +61,7 @@ extension PactEncodable {
 
 }
 
-private extension PactEncodable {
+private extension PactBuilder {
 
 	func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable]) {
 		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable])

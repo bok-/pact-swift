@@ -36,10 +36,10 @@ extension Response: Encodable {
 		self.statusCode = statusCode
 		self.headers = headers
 
-		var encodableBody: AnyEncodable?
+		var pactBody: AnyEncodable?
 		if let body = body {
 			do {
-				encodableBody = try PactEncodable(value: body).encoded(for: .body).node
+				pactBody = try PactBuilder(with: body).encoded(for: .body).node
 			} catch {
 				fatalError("Can not instatiate a `Response` with non-encodable `body`.")
 			}
@@ -49,7 +49,7 @@ extension Response: Encodable {
 			var container = $0.container(keyedBy: CodingKeys.self)
 			try container.encode(statusCode, forKey: .statusCode)
 			if let headers = headers { try container.encode(headers, forKey: .headers) }
-			if let encodableBody = encodableBody { try container.encode(encodableBody, forKey: .body) }
+			if let encodableBody = pactBody { try container.encode(encodableBody, forKey: .body) }
 		}
 
 	}
